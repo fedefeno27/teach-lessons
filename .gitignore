@@ -7,3 +7,13 @@ skills-lock.json
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Private — keep local, never publish
+MISSION.md
+NOTES.md
+RESOURCES.md
+learning-records/
+Portfolio*.png
+
+# Not published yet
+2_ ETF investor/
