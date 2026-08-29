@@ -1,0 +1,9 @@
+# Claude Code / Matt Pocock skill tooling — not lesson content
+.claude/
+.agents/
+skills-lock.json
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini

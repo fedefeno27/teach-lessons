@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fund Forensics Card — ETF Investor</title>
+<link rel="stylesheet" href="../assets/course.css">
+<link rel="stylesheet" href="../assets/widgets.css">
+<style>
+  /* Reference-card specific: denser than a lesson, built to print on one sheet. */
+  .page { padding-top: 2.5rem; }
+  .fieldcard {
+    border-top: 1.5px solid var(--ink);
+    padding-top: 0.7rem;
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+  }
+  .fieldcard .n {
+    font-family: var(--sans); font-size: 0.66rem; font-weight: 700;
+    letter-spacing: 0.12em; color: var(--accent);
+  }
+  .fieldcard h3 { margin: 0.15rem 0 0.45rem; font-size: 1.02rem; }
+  .fieldcard p { font-size: 0.88rem; line-height: 1.5; margin: 0 0 0.5rem; }
+  .fieldcard .where, .fieldcard .good, .fieldcard .flag {
+    font-family: var(--sans); font-size: 0.78rem; line-height: 1.5;
+    display: block; margin-top: 0.3rem; color: var(--ink-soft);
+  }
+  .fieldcard .where b, .fieldcard .good b, .fieldcard .flag b {
+    font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+    display: inline-block; min-width: 5.2rem; color: var(--muted);
+  }
+  .fieldcard .good b { color: var(--good); }
+  .fieldcard .flag b { color: var(--bad); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.2rem; max-width: var(--measure); }
+  @media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } }
+  .formula {
+    font-family: var(--mono); font-size: 0.8rem; line-height: 1.7;
+    background: var(--bg-sunk); border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent); border-radius: 3px;
+    padding: 0.9rem 1.1rem; margin: 0.8rem 0 1.3rem;
+    max-width: var(--measure); overflow-x: auto;
+  }
+  .formula .lbl { color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <div class="kicker">
+    <span>Reference Card</span><span class="sep">/</span>
+    <span>ETF Investor</span><span class="sep">/</span>
+    <span class="tag uk">UK · UCITS</span>
+  </div>
+  <h1>Fund Forensics</h1>
+  <p class="subtitle">Ten fields to pull from any ETF before it enters your portfolio —
+  where each one hides, what good looks like, and what should stop you.</p>
+</header>
+
+<article>
+
+<p class="lede">Every fund publishes far more than a fee. This card is the extraction
+routine: ten fields, each with a source you can open in a browser, so that judging a fund
+becomes a repeatable procedure instead of a feeling.</p>
+
+<p>Fields <strong>1–4</strong> are structural — they tell you what the thing <em>is</em>.
+Fields <strong>5–7</strong> are cost — what owning it takes from you. Fields
+<strong>8–10</strong> are durability and tax — whether it survives and how HMRC sees it.
+Work in that order; a structural failure means you never need to price the thing.</p>
+
+<hr>
+
+<h2 class="nonum">Structure</h2>
+
+<div class="fieldcard">
+  <span class="n">FIELD 01</span>
+  <h3>Domicile</h3>
+  <p>The country whose law the fund lives under. It sets the withholding tax the fund
+  suffers on its own dividends before you see a penny — a cost that never appears in the TER.</p>
+  <span class="where"><b>Where</b> KID header, factsheet "Domicile", or the first two letters
+  of the ISIN: <code>IE</code> = Ireland, <code>LU</code> = Luxembourg, <code>FR</code> = France.</span>
+  <span class="good"><b>Good</b> <code>IE</code> for anything holding US equities: the US–Ireland
+  treaty gives the fund a 15% rate on US dividends.</span>
+  <span class="flag"><b>Flag</b> <code>LU</code> on a US-heavy fund: SICAVs generally miss the
+  treaty rate and suffer the full 30%.</span>
+</div>
+
+<div class="fieldcard">
+  <span class="n">FIELD 02</span>
+  <h3>Replication method</h3>
+  <p>Physical (the fund owns the shares — fully, or a sampled subset) or synthetic (the fund
+  owns collateral and swaps its return for the index return with a bank).</p>
+  <span class="where"><b>Where</b> KID, "Objectives and Investment Policy". The word to hunt
+  for is <em>swap</em>.</span>
+  <span class="good"><b>Good</b> Physical full replication for large liquid indices. Synthetic
+  is legitimate and sometimes tax-superior on US indices — but know which you hold.</span>
+  <span class="flag"><b>Flag</b> Synthetic with a single counterparty and thin collateral
+  disclosure. UCITS caps counterparty exposure at 10% of assets; check the fund actually
+  reports against it.</span>
+</div>
+
+<div class="fieldcard">
+  <span class="n">FIELD 03</span>
+  <h3>Distribution policy</h3>
+  <p>Accumulating funds reinvest dividends inside the fund. Distributing funds pay them to you.
+  Inside an ISA or SIPP this is a convenience and rebalancing question, not a tax one.</p>
+  <span class="where"><b>Where</b> Fund name suffix — <code>(Acc)</code>, <code>(C)</code>
+  for accumulating; <code>(Dist)</code>, <code>(D)</code>, <code>(Inc)</code> for distributing.
+  Confirm on the KID; the suffix is a convention, not a rule.</span>
+  <span class="good"><b>Good</b> Accumulating while building, for fewer moving parts and no
+  idle cash. Distributing once the portfolio funds spending.</span>
+  <span class="flag"><b>Flag</b> Holding both share classes of one fund by accident — a
+  classic symptom of buying without a system.</span>
+</div>
+
+<div class="fieldcard">
+  <span class="n">FIELD 04</span>
+  <h3>Index tracked — the exact name</h3>
+  <p>"S&amp;P 500" is not an index specification. <em>Net Total Return</em>, <em>Gross Total
+  Return</em> and <em>Price</em> versions of the same index differ by the whole dividend stream
+  and its assumed tax. Comparing a fund to the wrong variant makes tracking data meaningless.</p>
+  <span class="where"><b>Where</b> Factsheet, "Benchmark". Look for <em>NTR</em>, <em>Net TR</em>,
+  <em>GTR</em>, <em>Price Return</em>.</span>
+  <span class="good"><b>Good</b> Net Total Return — the honest benchmark, and the one most
+  UCITS funds quote against.</span>
+  <span class="flag"><b>Flag</b> Two funds you are comparing quoting against different index
+  variants. Normalise before drawing any conclusion.</span>
+</div>
+
+<h2 class="nonum">Cost</h2>
+
+<div class="fieldcard">
+  <span class="n">FIELD 05</span>
+  <h3>TER / OCF</h3>
+  <p>The disclosed annual charge. An input to cost, not a measure of it: it excludes
+  transaction costs inside the fund, cash drag, withholding tax, and securities lending income.</p>
+  <span class="where"><b>Where</b> KID, "Charges" — "ongoing charges".</span>
+  <span class="good"><b>Good</b> Use it to build a shortlist, never to settle a decision.</span>
+  <span class="flag"><b>Flag</b> A TER that recently dropped. Fee cuts are often funded by
+  changes elsewhere; check tracking difference held up.</span>
+</div>
+
+<div class="fieldcard">
+  <span class="n">FIELD 06</span>
+  <h3>Tracking difference, over 3–5 years</h3>
+  <p>Fund return minus index return, annualised. The outcome metric — it nets everything,
+  including the items the TER omits. This is the number that decides what a fund cost you.</p>
+  <span class="where"><b>Where</b> Provider factsheet (fund vs benchmark, multiple periods),
+  or an aggregator such as trackingdifferences.com, whose data comes from KIIDs and monthly
+  factsheets.</span>
+  <span class="good"><b>Good</b> A small, <em>stable</em> gap across several years. Stability
+  matters more than any single year's figure.</span>
+  <span class="flag"><b>Flag</b> A gap much wider than the TER, or one that jumps around
+  year to year. Both suggest operational drag you are paying for and cannot see.</span>
+  <p style="margin-top:0.6rem"><strong>Sign convention:</strong> sources disagree. Fix yours and
+  state it. This workspace uses <em>fund minus index</em>, so <strong>negative means the fund
+  lagged</strong>. Some sites invert it. Always check which way a table runs before comparing.</p>
+</div>
+
+<div class="fieldcard">
+  <span class="n">FIELD 07</span>
+  <h3>Bid–offer spread</h3>
+  <p>The gap between buy and sell price — a cost you pay on every purchase, so it compounds
+  with contribution frequency, not with holding period.</p>
+  <span class="where"><b>Where</b> Broker order screen, or the fund page on justETF.</span>
+  <span class="good"><b>Good</b> A few basis points on a large mainstream fund, quoted during
+  London hours when the underlying market is also open.</span>
+  <span class="flag"><b>Flag</b> Wide or erratic spreads, and trading a fund whose underlying
+  market is shut — spreads widen when market makers are hedging blind.</span>
+</div>
+
+<h2 class="nonum">Durability &amp; tax</h2>
+
+<div class="fieldcard">
+  <span class="n">FIELD 08</span>
+  <h3>Fund size (AUM) and age</h3>
+  <p>Small funds get closed. Closure is not a catastrophe — you are returned your money — but
+  it forces a sale on someone else's timetable and can crystallise a taxable event outside a wrapper.</p>
+  <span class="where"><b>Where</b> Factsheet, "Fund size" / "Net assets".</span>
+  <span class="good"><b>Good</b> Comfortably into the hundreds of millions, with a multi-year
+  record. Larger funds also tend to have tighter spreads and more market makers.</span>
+  <span class="flag"><b>Flag</b> Under roughly £100m and shrinking, or a fund launched into
+  a theme in the last eighteen months.</span>
+</div>
+
+<div class="fieldcard">
+  <span class="n">FIELD 09</span>
+  <h3>Securities lending policy</h3>
+  <p>Many funds lend their holdings to short sellers for a fee. That income improves tracking
+  difference; it also introduces counterparty and collateral risk. It is a trade, not free money.</p>
+  <span class="where"><b>Where</b> Prospectus, annual report, or the provider's securities
+  lending disclosure page.</span>
+  <span class="good"><b>Good</b> A disclosed cap on the share on loan, over-collateralisation,
+  and most of the revenue returned to the fund rather than the manager.</span>
+  <span class="flag"><b>Flag</b> No disclosure at all, or a large slice of lending revenue
+  retained by the manager.</span>
+</div>
+
+<div class="fieldcard">
+  <span class="n">FIELD 10</span>
+  <h3>UK Reporting Fund Status</h3>
+  <p>An HMRC election. With it, gains on an offshore fund are taxed as capital gains; without
+  it, as income at up to 45%. <strong>Irrelevant inside an ISA or SIPP</strong> — and decisive
+  the moment you hold anything outside one.</p>
+  <span class="where"><b>Where</b> HMRC's published list of approved reporting funds, updated
+  monthly; also stated on most provider tax pages.</span>
+  <span class="good"><b>Good</b> Reporting status held continuously. Most mainstream
+  Ireland-domiciled UCITS ETFs have it.</span>
+  <span class="flag"><b>Flag</b> Buying an obscure fund into a taxable account without
+  checking. This is the single most expensive unforced error available to a UK investor.</span>
+</div>
+
+<hr>
+
+<h2 class="nonum">The arithmetic</h2>
+
+<h4>What a fund costs you to hold</h4>
+<div class="formula">
+<span class="lbl">// annual, and the only holding-cost number that matters</span><br>
+annual_cost ≈ −(tracking_difference)<br><br>
+<span class="lbl">// example: TD of −0.19%/yr means the fund cost you 0.19%/yr,</span><br>
+<span class="lbl">// whatever its TER happened to say</span>
+</div>
+
+<h4>What a fund costs you to buy</h4>
+<div class="formula">
+<span class="lbl">// per purchase — scales with how often you trade, not how long you hold</span><br>
+entry_cost ≈ (spread ÷ 2) + broker_commission<br><br>
+<span class="lbl">// monthly contributions pay this twelve times a year;</span><br>
+<span class="lbl">// this is why free regular-investment dealing is worth real money</span>
+</div>
+
+<h4>Withholding tax drag from domicile</h4>
+<div class="formula">
+wht_drag = market_weight × dividend_yield × withholding_rate<br><br>
+<span class="lbl">// Ireland vs Luxembourg on a pure US equity fund:</span><br>
+<span class="lbl">// difference = 1.00 × yield × (0.30 − 0.15)</span><br>
+<span class="lbl">// at a ~1.05% US yield that is ≈ 0.16%/yr — larger than many TERs</span>
+</div>
+
+<h4>Is switching worth it?</h4>
+<div class="formula">
+breakeven_years = switching_cost ÷ annual_saving<br><br>
+switching_cost = sell_spread + buy_spread + commissions<br>
+<span class="lbl">// + capital gains tax, if and only if you are outside a wrapper</span><br><br>
+<span class="lbl">// inside an ISA or SIPP there is no tax leg, so the bar is low —</span><br>
+<span class="lbl">// but a saving under ~0.10%/yr rarely justifies the disruption</span>
+</div>
+
+<hr>
+
+<h2 class="nonum">The five-minute routine</h2>
+
+<ol class="steps">
+  <li><strong>Open the KID.</strong> Read domicile, replication, distribution policy. Roughly
+  sixty seconds, and it eliminates most candidates.</li>
+  <li><strong>Open the factsheet.</strong> Take the exact benchmark name, fund size, and the
+  fund-vs-benchmark return table.</li>
+  <li><strong>Compute the gap</strong> over three and five years. Compare it to the TER. If the
+  gap is much wider, ask why before you buy.</li>
+  <li><strong>Check the spread</strong> on your broker's order screen during London hours.</li>
+  <li><strong>Check for duplication</strong> against what you already own — same index, same
+  region, same top ten holdings. Overlap is the cost nobody prices.</li>
+</ol>
+
+<div class="callout uk">
+  <span class="label">UK note</span>
+  <p>US-domiciled ETFs — <span class="ticker">VTI</span>, <span class="ticker">VOO</span>,
+  <span class="ticker">SPY</span> — are effectively unavailable to UK retail investors under
+  the UK PRIIPs regime, which was retained after Brexit. Most US-written ETF advice is
+  therefore inapplicable here. Read it for method; ignore its tickers.</p>
+</div>
+
+</article>
+
+<footer class="lesson-footer">
+  <h4>Where this card is used</h4>
+  <ul class="linkgrid">
+    <li><a href="../lessons/0001-what-an-etf-really-costs.html">Lesson 1 — What an ETF Really Costs You</a>
+      <span class="what">Fields 5, 6, 7 and the arithmetic behind them</span></li>
+    <li><a href="../RESOURCES.md">RESOURCES.md</a>
+      <span class="what">Full source list with annotations</span></li>
+  </ul>
+
+  <h4>Primary sources for this card</h4>
+  <ul class="linkgrid">
+    <li><a href="https://www.justetf.com/uk/academy/make-the-right-etf-selection.html">justETF — Make the right ETF selection</a>
+      <span class="what">Fields 1–3, 7, 8</span></li>
+    <li><a href="https://www.etf.com/sections/etf-basics/understanding-tracking-difference-and-tracking-error">ETF.com — Tracking difference vs tracking error</a>
+      <span class="what">Field 6</span></li>
+    <li><a href="https://www.bogleheads.org/wiki/Nonresident_alien_investors_and_Ireland_domiciled_ETFs">Bogleheads — Ireland domiciled ETFs</a>
+      <span class="what">Field 1, withholding arithmetic</span></li>
+    <li><a href="https://gov.uk/hmrc-internal-manuals/investment-funds/ifm12410">HMRC IFM12410 — Reporting funds</a>
+      <span class="what">Field 10</span></li>
+  </ul>
+
+  <div class="ask">
+    <strong>This card is a starting point, not scripture.</strong> When a fund does something
+    the card does not cover — an unusual index, a hedged share class, a structure you cannot
+    place — bring it to your teacher and ask. Working through a real awkward case is worth
+    more than another pass over the general rule.
+  </div>
+
+  <p class="disclaimer">Educational material, not personal financial advice. Figures such as
+  dividend yields, TERs and allowances change; verify every number against the primary source
+  before acting on it. Last revised 25 August 2026.</p>
+</footer>
+
+</div>
+</body>
+</html>
