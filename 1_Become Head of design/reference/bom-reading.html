@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference &middot; Reading a BOM</title>
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body data-lesson="ref-bom">
+<main class="sheet">
+
+  <p class="kicker">Reference sheet &middot; Head of Design</p>
+  <h1>Reading a BOM</h1>
+  <p class="subtitle">Find where a design decision lands in the bill of materials &mdash; and say what it costs in the finance lead's terms.</p>
+
+  <div class="meta">
+    <span><b>From</b> <a href="../lessons/0005-read-a-bom-well-enough-to-argue.html">Lesson 05</a></span>
+    <span><b>Use when</b> Someone says &ldquo;that will cost more&rdquo;</span>
+    <span><b>Pairs with</b> <a href="decision-sentence.html">The Decision Sentence</a></span>
+  </div>
+
+  <h2>Where the cost sits</h2>
+
+  <div class="table-wrap wide">
+  <table>
+    <thead><tr><th>Where</th><th>Meaning</th><th>Your lever</th></tr></thead>
+    <tbody>
+      <tr><td><b>Standard parts</b></td><td>Off the shelf</td><td>Standard over special; fastener count</td></tr>
+      <tr><td><b>Custom parts</b></td><td>Made to your drawing</td><td>Material, process, finish, tolerance, tool</td></tr>
+      <tr><td><b>Assembly</b></td><td>Labour and time</td><td>Part count, fixings, steps</td></tr>
+      <tr><td><b>Overhead</b></td><td>Indirect support costs</td><td>Mostly not yours &mdash; complexity feeds it</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p><b>Fixed vs variable.</b> Tools are paid once; parts are paid per unit. One-off &divide; volume = tooling per unit. Keep them apart.</p>
+
+  <h2>Three passes</h2>
+
+  <div class="slots">
+    <div class="slot">
+      <div class="slot-name">1 &middot; Count<span>complexity</span></div>
+      <div class="slot-body">Lines, distinct parts, fasteners, suppliers.</div>
+    </div>
+    <div class="slot">
+      <div class="slot-name">2 &middot; Rank<span>where to argue</span></div>
+      <div class="slot-body">Sort by cost. What share do the top five lines hold? Check, don't assume.</div>
+    </div>
+    <div class="slot">
+      <div class="slot-name">3 &middot; Question<span>each top line</span></div>
+      <div class="slot-body">Standard or custom? What process? Fixed or variable? Which decision of mine sets it?</div>
+    </div>
+  </div>
+
+  <h2>Does this part need to exist?</h2>
+
+  <p>A part must be separate only if <b>yes</b> to at least one:</p>
+
+  <ol>
+    <li>Does it move relative to all adjacent parts in normal operation?</li>
+    <li>Must it be a different material, for functional reasons?</li>
+    <li>Must it be separate to allow assembly or disassembly of other parts?</li>
+  </ol>
+
+  <p>Three no's &rarr; a candidate to merge with a neighbour. <b>Cost the other side</b> &mdash; bigger tool, stronger material &mdash; before you claim it.</p>
+
+  <div class="callout accent">
+    <p class="callout-title">Template</p>
+    <p><em>&ldquo;[Change] takes &pound;[x] out of every unit &mdash; &pound;[y] a year at [volume] units &mdash; for a one-off &pound;[z] on [the tool].&rdquo;</em> Say <b>estimated</b> and whose estimate it is until it is quoted.</p>
+  </div>
+
+  <div class="callout">
+    <p class="callout-title">Failure modes</p>
+    <p><b>Reading top to bottom</b> &mdash; you see everything and rank nothing. <b>Mixing a one-off into a per-unit figure.</b> <b>Claiming a merge without costing the bigger tool.</b> <b>An estimate presented as a quote.</b> <b>Quoting a vendor's savings figures as a forecast for your product.</b></p>
+  </div>
+
+  <nav class="footer-nav">
+    <ul>
+      <li><a href="../lessons/0005-read-a-bom-well-enough-to-argue.html">&larr; Lesson 05 &mdash; Read a BOM Well Enough to Argue With It</a></li>
+      <li><a href="decision-sentence.html">Reference &mdash; The Decision Sentence</a></li>
+      <li>Sources: <a href="https://www.dfma.com/resources/part-consolidation.asp">Boothroyd Dewhurst, Part Consolidation</a> &middot; Ulrich &amp; Eppinger, <em>Product Design and Development</em>, design-for-manufacturing chapter. The three passes are this workspace's own synthesis.</li>
+    </ul>
+  </nav>
+
+</main>
+<script src="../assets/practice.js"></script>
+</body>
+</html>

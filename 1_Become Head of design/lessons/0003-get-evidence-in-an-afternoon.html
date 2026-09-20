@@ -11,7 +11,7 @@
 
   <p class="kicker">Lesson 03 &middot; Storytelling the decision</p>
   <h1>Get Evidence in an Afternoon</h1>
-  <p class="subtitle">A level-2 reason is not a research budget. It is one sharp question, six people, and a line you drew before you looked.</p>
+  <p class="subtitle">A level-2 reason is not a research budget. It is one sharp claim, one measurement or one small hands-on test, and a line you drew before you looked.</p>
 
   <div class="meta">
     <span><b>Time</b> 30 minutes</span>
@@ -19,28 +19,34 @@
     <span><b>Builds on</b> <a href="0002-justify-at-the-right-rung.html">Lesson 02</a></span>
   </div>
 
-  <p class="lead">Lesson 02 ended on an uncomfortable line: if everything on your list sits at level 4 or 5, go and <em>get</em> a level-2 reason. It didn't say how. This lesson does &mdash; and it assumes you have no budget, no researcher, and nobody's permission.</p>
+  <p class="lead">Lesson 02 ended on an uncomfortable line: if everything on your list sits at level 4 or 5, go and <em>get</em> a level-2 reason. It didn't say how. This lesson does &mdash; for a physical product, and assuming you have no budget, no researcher, and nobody's permission.</p>
 
-  <p>What stops most designers is that they picture evidence as a <em>study</em>. A study needs a plan, a budget and a sign-off. A level-2 reason needs much less: something that was <strong>observed rather than opined</strong>, stated at exactly the size it was observed. That can be done between lunch and the end of the day.</p>
+  <p>What stops most designers is that they picture evidence as a <em>study</em>. A study needs a plan, a budget and a sign-off. A level-2 reason needs much less: something that was <strong>measured or observed rather than opined</strong>, stated at exactly the size it was measured or observed. That fits between lunch and the end of the day.</p>
 
-  <p class="marginnote"><b>Where this comes from.</b> The three sources and the four-part plan are my synthesis. They lean on Nielsen Norman Group's work on small-sample testing<a class="cite" href="#s1">1</a><a class="cite" href="#s2">2</a> and on observation<a class="cite" href="#s3">3</a>. Those sources are about software interfaces. The logic &mdash; watch people attempt a task; few participants find the problems &mdash; carries over to a hands-on test of a physical part, but that carry-over is my inference, not theirs. Tell me if it misbehaves on real hardware.</p>
+  <p>There is a second point, and it is the one that matters at principal level. You do not have to run every test with your own hands. Engineering, quality and the test lab own the rigs. Your job is to write the <strong>claim</strong> and the <strong>line</strong> &mdash; the two things nobody else will write for you &mdash; and hand over the rest.</p>
 
-  <h2>Three places evidence hides</h2>
+  <p class="marginnote"><b>Where this comes from.</b> The four places to look and the four-line plan are my synthesis; I could not find a published method for cheap hands-on testing of hardware (that gap is logged in <code>RESOURCES.md</code>). What I <em>can</em> point to is the arithmetic: how much a small number of pieces can and can't prove is standard binomial statistics, used in reliability engineering and in clinical work<a class="cite" href="#s1">1</a><a class="cite" href="#s2">2</a><a class="cite" href="#s3">3</a>, and the value of observing a product in use comes from the product-development textbook literature<a class="cite" href="#s4">4</a>. Tell me where it misbehaves on real hardware.</p>
+
+  <h2>Four places evidence hides</h2>
 
   <p>Cheapest first. Stop at the first one that answers your question.</p>
 
   <div class="slots">
     <div class="slot">
       <div class="slot-name">Already owned<span>hours &middot; free</span></div>
-      <div class="slot-body">Returns and warranty codes, service tickets, dealer or workshop notes, old test reports, supplier failure data. Someone in your company already holds it, and probably nobody has asked them about <em>your</em> part. Ask for a specific slice &mdash; <em>&ldquo;returns coded to this bracket, last twelve months&rdquo;</em> &mdash; not &ldquo;the data&rdquo;.</div>
+      <div class="slot-body">Returns and warranty codes, service tickets, dealer or workshop notes, supplier failure data, old test-lab reports. Someone in your company already holds it, and probably nobody has asked them about <em>your</em> part. Ask for a specific slice &mdash; <em>&ldquo;returns coded to this bracket, last twelve months&rdquo;</em> &mdash; not &ldquo;the data&rdquo;.</div>
     </div>
     <div class="slot">
-      <div class="slot-name">Test what exists<span>one afternoon</span></div>
-      <div class="slot-body">Hand six people the current product and one task. No prototype needed: the thing you want to change is usually the best test object, because the failure you're claiming already lives in it.</div>
+      <div class="slot-name">Measure it<span>an hour or two</span></div>
+      <div class="slot-body">A push-pull force gauge, a scale, calipers, a tape. Operating force, weight, gap, reach, clearance &mdash; on your product <em>and</em> on the one you're being compared with. Measure at least three units so you can see the spread; one unit gives you a number, not a range.</div>
+    </div>
+    <div class="slot">
+      <div class="slot-name">Watch hands on the real thing<span>one afternoon</span></div>
+      <div class="slot-body">Hand six people the current product and one task, in the conditions it will really meet &mdash; gloves, rain, a bag in the other hand. No prototype needed: the thing you want to change is usually the best test object, because the failure you're claiming already lives in it.</div>
     </div>
     <div class="slot">
       <div class="slot-name">Test a stand-in<span>days</span></div>
-      <div class="slot-body">A foam block, a 3D print, a taped-up mock. Good enough when the question is size, reach, grip or force; not good enough when it is finish or feel. Ulrich and Eppinger list <em>learning</em> &mdash; will it work, and how well does it meet the need &mdash; among the core purposes of a prototype.<a class="cite" href="#s5">5</a></div>
+      <div class="slot-body">A foam block, a 3D print, a taped-up mock. Good enough when the question is size, reach, grip or force; not good enough when it is finish or feel. Ulrich and Eppinger list <em>learning</em> &mdash; will it work, and how well does it meet the need &mdash; among the core purposes of a prototype.<a class="cite" href="#s4">4</a></div>
     </div>
   </div>
 
@@ -48,50 +54,65 @@
 
   <h2>Watch, don't ask</h2>
 
-  <p>Nielsen's rule is blunt: <em>&ldquo;Watch what people actually do. Do not believe what people say they do. Definitely don't believe what people predict they may do in the future.&rdquo;</em><a class="cite" href="#s3">3</a></p>
-
   <p>Ask six riders <em>&ldquo;which latch do you prefer?&rdquo;</em> and you have not collected evidence. You have collected six level-5 opinions &mdash; a poll of taste, with more people in it. Hand them the latch, in the gloves they'd really wear, say nothing, and <strong>watch</strong>. One is a claim about them; the other is a fact about your part.</p>
 
-  <h2>What six people can and can't say</h2>
+  <p>Observing a product in use is one of the three standard ways the product-development literature gathers data about what people need &mdash; alongside interviews and focus groups<a class="cite" href="#s4">4</a> &mdash; and it is the one that shows you what the other two can only report.</p>
 
-  <p>The reason six is enough is that people repeat each other. Nielsen's analysis is that five participants surface roughly 85% of the usability problems in a design, and each extra person mostly shows you what you have already seen.<a class="cite" href="#s1">1</a> He would rather you spend a fixed budget on three small rounds of five than one round of fifteen &mdash; test, fix, test again.<a class="cite" href="#s1">1</a> Steve Krug's do-it-yourself method is the same idea run as a habit: a morning a month, three participants per round.<a class="cite" href="#s4">4</a></p>
+  <h2>What a small test can and can't say</h2>
 
-  <p>The same sources draw a hard line under it. A study this size is <em>&ldquo;aimed at collecting insights to drive your design, not numbers to impress people in PowerPoint&rdquo;</em>; if you want statistically significant numbers, the guidance is at least twenty participants, and tighter estimates need more.<a class="cite" href="#s2">2</a></p>
+  <p>A handful of pieces or people can be read two ways, and each has a trap.</p>
 
-  <p>So six people can tell you <strong>that</strong> something happens. They cannot tell you <strong>how often</strong>. Your sentence has to be the size of what you saw:</p>
+  <p><strong>When something fails,</strong> you have learned that it <em>can</em> fail. Two of six gloved riders couldn't open the latch: the problem is real, and you now know what it looks like. You do not know how many riders it affects. Two of six is a third of your sample, not a third of your customers.</p>
+
+  <p><strong>When nothing fails,</strong> you have learned much less than it feels like. This is the trap that catches designers who are otherwise careful. If zero pieces fail in <em>n</em> trials, the true failure rate can still be well above zero. A quick rule of thumb puts the 95%-confidence upper limit at about 3 &divide; <em>n</em>; it was set out for medical trials<a class="cite" href="#s1">1</a> and is a good approximation once <em>n</em> is above about 30.<a class="cite" href="#s2">2</a> For small groups the exact figure is a little lower &mdash; I worked these out from the success-run formula in source 3:</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Passed, none failed</th><th>True failure rate could still be as high as</th></tr></thead>
+    <tbody>
+      <tr><td><b>6 of 6</b></td><td>about 39% &mdash; four in ten</td></tr>
+      <tr><td><b>10 of 10</b></td><td>about 26% &mdash; one in four</td></tr>
+      <tr><td><b>30 of 30</b></td><td>about 10% &mdash; one in ten</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Engineers reverse the question: how many pieces must survive with <em>no</em> failures to claim a reliability? The standard success-run formula is <em>n</em> = ln(1 &minus; confidence) &divide; ln(reliability). It gives 22 pieces for 90% reliability at 90% confidence, and 59 for 95% at 95%.<a class="cite" href="#s3">3</a> If even one fails, the formula no longer applies.<a class="cite" href="#s3">3</a> That is a job for the test lab &mdash; but now you know what to ask for, and why six of anything won't do.</p>
+
+  <p>So your sentence has to be the size of what you saw:</p>
 
   <div class="pair">
     <div class="pair-card is-bad">
       <p class="pair-label">Over-claimed</p>
-      <p>&ldquo;Sixty-seven percent of riders can't operate the latch in winter gloves.&rdquo;</p>
+      <p>&ldquo;Six for six opened it in winter gloves, so the latch is fine for winter riders.&rdquo;</p>
     </div>
     <div class="pair-card is-good">
       <p class="pair-label">Right-sized</p>
-      <p>&ldquo;Six riders tried it in winter gloves; four couldn't open it first go. That's enough to say the problem is real. It isn't enough to say how common it is.&rdquo;</p>
+      <p>&ldquo;Six riders tried it in winter gloves; all six opened it first go. That's a good sign. It can't rule out a failure rate near four in ten, so it isn't a sign-off.&rdquo;</p>
     </div>
   </div>
 
   <div class="callout accent">
     <p class="callout-title">The over-claim, again</p>
-    <p>This is Lesson 02's most expensive mistake in a lab coat. There it was a level-5 preference dressed as a level-1 constraint; here it is six people dressed as a statistic. It gets caught the same way &mdash; by the one person in the room who works with numbers &mdash; and it costs the same thing: every later result you present is discounted, including the sound ones.</p>
+    <p>This is Lesson 02's most expensive mistake in a lab coat. There it was a level-5 preference dressed as a level-1 constraint; here it is six clean passes dressed as a guarantee. It gets caught the same way &mdash; by the one person in the room who works with numbers &mdash; and it costs the same thing: every later result you present is discounted, including the sound ones.</p>
   </div>
 
   <h2>The four-line plan</h2>
 
-  <p>Every test worth running fits on four lines. Write them <em>before</em> you recruit anyone.</p>
+  <p>Every test worth running fits on four lines. Write them <em>before</em> you measure, recruit or book anyone.</p>
 
   <div class="slots">
     <div class="slot">
       <div class="slot-name">Claim<span>line one</span></div>
-      <div class="slot-body">One sentence a test could prove <em>false</em> &mdash; about what people <em>can do</em>, not what they'd like. <em>&ldquo;Riders in winter gloves can open the new latch unaided.&rdquo;</em> Not <em>&ldquo;the new latch is better.&rdquo;</em></div>
+      <div class="slot-body">One sentence a test could prove <em>false</em> &mdash; about what the part <em>does</em> or what people <em>can do</em>, not what they'd like. <em>&ldquo;Riders in winter gloves can open the new latch unaided.&rdquo;</em> Not <em>&ldquo;the new latch is better.&rdquo;</em></div>
     </div>
     <div class="slot">
-      <div class="slot-name">Task<span>line two</span></div>
-      <div class="slot-body">What they will do with their hands, in one action, while you watch and don't explain. Recruit people who resemble the user and don't sit in the studio &mdash; colleagues share your eye, which is exactly the problem <a href="0001-lead-with-the-number.html">Lesson 01</a> opened with.</div>
+      <div class="slot-name">Test<span>line two</span></div>
+      <div class="slot-body">What you will measure, or what they will do with their hands, in one action &mdash; while you watch and don't explain. Recruit people who resemble the user and don't sit in the studio: colleagues share your eye, which is exactly the problem <a href="0001-lead-with-the-number.html">Lesson 01</a> opened with. Say who runs it: you, or the lab.</div>
     </div>
     <div class="slot">
       <div class="slot-name">Line<span>line three &middot; my rule</span></div>
-      <div class="slot-body">The result that would change your mind, written down before the first participant. <em>&ldquo;Two or more of six fail and we don't ship this latch.&rdquo;</em> Fix it afterwards and every result will find a way to agree with you.</div>
+      <div class="slot-body">The result that would change your mind, written down before the first measurement. <em>&ldquo;Two or more of six fail and we don't ship this latch.&rdquo;</em> Or <em>&ldquo;any unit above 30 newtons and we change it.&rdquo;</em> Fix it afterwards and every result will find a way to agree with you.</div>
     </div>
     <div class="slot">
       <div class="slot-name">Sentence<span>line four</span></div>
@@ -99,12 +120,17 @@
     </div>
   </div>
 
-  <div class="formula">In a test with [n] [who], [doing what], [k] [what happened].
-That shows [it happens]. It doesn't show [how often].</div>
+  <div class="formula">In a test of [n] [units or people], [doing what], [k] [what happened].
+That shows [it happens / it holds]. It doesn't show [how often / how long].</div>
 
   <div class="callout">
     <p class="callout-title">A test that can't fail isn't a test</p>
     <p>If every result you can imagine leaves your decision standing, you have built a demonstration, not evidence &mdash; level 5 with props. The line is what makes it level 2. And if it does come out against you, you have just been spared making the defence in the room.</p>
+  </div>
+
+  <div class="callout">
+    <p class="callout-title">You own the claim and the line, not the rig</p>
+    <p>When the test needs equipment or hours you don't control, send engineering or quality the claim and the line <em>with the request</em>. It makes the ask small and specific, and it makes the result hard to argue with afterwards, because both sides agreed what would count before anyone looked. Deciding what gets tested, and what result would settle it, is design leadership work &mdash; and it is work you can do this week.</p>
   </div>
 
   <p>Where it goes afterwards is where <a href="0002-justify-at-the-right-rung.html">Lesson 02</a> already put it: you open at the highest honest level. <em>&ldquo;Four of six riders in winter gloves couldn't open it&rdquo;</em> is a level-2 opening; the pound figure from <a href="0001-lead-with-the-number.html">Lesson 01</a> then follows it, and the two together are hard to wave away.</p>
@@ -115,12 +141,12 @@ That shows [it happens]. It doesn't show [how often].</div>
 
   <div class="quiz" data-quiz>
     <p class="quiz-tag">One of four</p>
-    <p class="quiz-q">Six riders in winter gloves tried a new latch; two couldn't open it. Which sentence is sized correctly?</p>
+    <p class="quiz-q">Six riders in winter gloves tried a new latch, and all six opened it. Which sentence is sized correctly?</p>
     <div class="quiz-opts">
-      <button class="quiz-opt" data-correct data-fb="Count, group size and condition are all there, and it claims only what six people can show: the problem exists. Frequency needs a far larger sample.">Two of six gloved riders failed; the problem is real, its frequency unknown.</button>
-      <button class="quiz-opt" data-fb="Two of six is a third of the sample, not a third of all winter riders. That turns a count into a population statistic, which six people cannot support.">One third of all winter riders cannot open it, so we redesign it.</button>
-      <button class="quiz-opt" data-fb="Nobody was asked whether they liked the design &mdash; they were asked to open a latch. Turning a task failure into a verdict on the whole design is a claim the test never touched.">Riders generally struggle with the latch, so people clearly dislike the whole design.</button>
-      <button class="quiz-opt" data-fb="This is the under-claim from Lesson 02 in a new place. Six people can't give you a percentage, but they can show a problem is real &mdash; and that was exactly what you needed.">Two of six failed, but six people is too few to even mention.</button>
+      <button class="quiz-opt" data-correct data-fb="It reports what happened and names what it can't rule out. With six clean passes, the true failure rate could still be around four in ten &mdash; so this is a good sign, not a sign-off.">Six of six opened it; encouraging, but failure could still be four in ten.</button>
+      <button class="quiz-opt" data-fb="Six passes cannot support &ldquo;every winter rider&rdquo;. That turns a small count into a guarantee about a population &mdash; the over-claim, in a lab coat.">Six of six opened it; so the latch works for every winter rider.</button>
+      <button class="quiz-opt" data-fb="A percentage that low needs many more pieces than six &mdash; roughly thirty clean passes only get you to about ten percent. Zero failures in six is far weaker than it feels.">Six of six opened it; so failure is under one percent, ship it.</button>
+      <button class="quiz-opt" data-fb="This is the under-claim from Lesson 02 in a new place. Six clean passes are worth reporting &mdash; you just have to say how much they can and can't show.">Six of six opened it; that group is far too small to mention here.</button>
     </div>
   </div>
 
@@ -128,9 +154,9 @@ That shows [it happens]. It doesn't show [how often].</div>
     <p class="quiz-tag">Two of four</p>
     <p class="quiz-q">Which test plan could actually come out against you?</p>
     <div class="quiz-opts">
-      <button class="quiz-opt" data-correct data-fb="There is a task, a group, a condition and a line drawn in advance. Two failures would visibly overturn the decision, and that is what makes the result evidence.">Six riders try it gloved; two or more failures means we redesign.</button>
-      <button class="quiz-opt" data-fb="Deciding what counts as failure after the results are in lets every outcome be read as a win. The line has to exist before the first participant.">Six riders try it gloved; we then decide what counts as failing.</button>
-      <button class="quiz-opt" data-fb="Asking which they prefer collects six opinions &mdash; level 5 with a bigger audience. Watch what people do, not what they say they would choose.">Six riders try it gloved; we ask which latch design they prefer.</button>
+      <button class="quiz-opt" data-correct data-fb="There is a task, a group, a condition and a line drawn in advance. Two failures would visibly overturn the decision, and that is what makes the result evidence.">Six gloved riders try it; two or more failures means we redesign.</button>
+      <button class="quiz-opt" data-fb="Deciding what counts as failure after the results are in lets every outcome be read as a win. The line has to exist before the first participant.">Six gloved riders try it; we decide afterwards what counts as failure.</button>
+      <button class="quiz-opt" data-fb="Asking which they prefer collects six opinions &mdash; level 5 with a bigger audience. Watch what people do, not what they say they would choose.">Six gloved riders try it; we ask which design they like best.</button>
       <button class="quiz-opt" data-fb="Colleagues share your eye, they are barehanded rather than gloved, and &ldquo;any success&rdquo; cannot fail. Three flaws, and the plan can only ever agree with you.">Six colleagues try it barehanded; any success means we ship it now.</button>
     </div>
   </div>
@@ -168,16 +194,16 @@ That shows [it happens]. It doesn't show [how often].</div>
   <div class="practice">
     <p class="practice-tag">Plan your afternoon</p>
 
-    <label>The claim <span>one sentence a test could prove wrong &mdash; about what people can do, not what they'd like</span></label>
+    <label>The claim <span>one sentence a test could prove wrong &mdash; about what the part does or what people can do, not what they'd like</span></label>
     <textarea data-practice="claim" rows="2"></textarea>
 
     <label>What you already own <span>returns, warranty codes, service tickets, old test reports &mdash; who holds them, and the exact slice you'll ask for</span></label>
     <textarea data-practice="owned" rows="3"></textarea>
 
-    <label>The task and the people <span>what they'll do with their hands, in one action; who they are; what conditions they're in</span></label>
+    <label>The measurement or the task, and who does it <span>what you'll measure, or what people will do with their hands, in one action; on how many units or people; in what conditions; you or the lab</span></label>
     <textarea data-practice="task" rows="3"></textarea>
 
-    <label>The line you draw before you look <span>the result that would change your decision &mdash; a number of failures, not a feeling</span></label>
+    <label>The line you draw before you look <span>the result that would change your decision &mdash; a number of failures or a measured value, not a feeling</span></label>
     <textarea data-practice="line" rows="2"></textarea>
 
     <label>The sentence you'll say afterwards <span>count, group size, condition &mdash; and one clause on what it doesn't show</span></label>
@@ -189,37 +215,36 @@ That shows [it happens]. It doesn't show [how often].</div>
   <h3>Mark your own work</h3>
 
   <ul class="checklist">
-    <li><label><input type="checkbox" data-check="c1"><span>My claim is about something people <em>do</em>, not something they'd like.</span></label></li>
+    <li><label><input type="checkbox" data-check="c1"><span>My claim is about something the part or the person <em>does</em>, not something they'd like.</span></label></li>
     <li><label><input type="checkbox" data-check="c2"><span>The test could come out against me, and I know which result would.</span></label></li>
     <li><label><input type="checkbox" data-check="c3"><span>The line is written down before I've seen a single result.</span></label></li>
-    <li><label><input type="checkbox" data-check="c4"><span>My sentence states a count and a group size &mdash; never a percentage.</span></label></li>
+    <li><label><input type="checkbox" data-check="c4"><span>My sentence states a count and a group size &mdash; never a percentage &mdash; and says what a clean result can't rule out.</span></label></li>
   </ul>
 
   <div class="callout">
-    <p class="callout-title">If you can't get six people</p>
-    <p>Three is a start, and small and repeated beats big and once: test, fix what you saw, test again. That is Nielsen's argument for several small rounds over one large one,<a class="cite" href="#s1">1</a> and it is also easier to schedule on a Thursday afternoon than a research project is.</p>
+    <p class="callout-title">If you can't get six people or many pieces</p>
+    <p>Three is a start. Small and repeated beats big and once: test, fix what you saw, test again. Report three as three &mdash; a count and a group size &mdash; and keep the durability or reliability claims for the test lab, where 22 or 59 pieces is a normal request rather than a strange one.</p>
   </div>
 
   <h2>This week</h2>
 
   <ul class="checklist">
     <li><label><input type="checkbox" data-check="w1"><span>Send one email asking for one slice of data that already exists about your decision.</span></label></li>
-    <li><label><input type="checkbox" data-check="w2"><span>Write your line &mdash; the result that would change your mind &mdash; before you book anyone.</span></label></li>
+    <li><label><input type="checkbox" data-check="w2"><span>Write your line &mdash; the result that would change your mind &mdash; before you book anyone or borrow a gauge.</span></label></li>
     <li><label><input type="checkbox" data-check="w3"><span>When you have a result, bring me the sentence <em>and</em> whether it surprised you.</span></label></li>
   </ul>
 
   <h2>Read this next</h2>
 
-  <p><strong>Jakob Nielsen, <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">&ldquo;Why You Only Need to Test with 5 Users&rdquo;</a> (Nielsen Norman Group).</strong> About ten minutes, free, and the primary source for the claim this lesson leans on hardest. Read it with one caveat in mind: it is written about software interfaces and about <em>finding problems</em>. It is not a licence to quote percentages, and its authors say so.<a class="cite" href="#s1">1</a><a class="cite" href="#s2">2</a> If you want the how-to version for running the sessions themselves, Steve Krug's <em>Rocket Surgery Made Easy</em> is the standard one.<a class="cite" href="#s4">4</a></p>
+  <p><strong>J. A. Hanley and A. Lippman-Hand, <a href="https://jhanley.biostat.mcgill.ca/c607/ch08/zero_numerator.pdf">&ldquo;If Nothing Goes Wrong, Is Everything All Right? Interpreting Zero Numerators&rdquo;</a> (<em>JAMA</em>, 1983).</strong> Three pages, free, and the origin of the 3 &divide; <em>n</em> rule. It is written about clinical trials, and the arithmetic is identical for a latch. One honest caveat: I could not read the paper's text in this session, so what I say about it comes from summaries &mdash; check it against the paper.<a class="cite" href="#s1">1</a> When you want the wider view of prototypes as tools for learning, <em>Product Design and Development</em> by Ulrich and Eppinger is the hardware-side textbook.<a class="cite" href="#s4">4</a></p>
 
   <h2>Sources</h2>
   <ol class="sources">
-    <li id="s1">Jakob Nielsen, <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">&ldquo;Why You Only Need to Test with 5 Users&rdquo;</a>, Nielsen Norman Group. Source for: five participants surfacing roughly 85% of usability problems; diminishing returns per extra participant; several small rounds preferred to one large one.</li>
-    <li id="s2">Jakob Nielsen, <a href="https://www.nngroup.com/articles/how-many-test-users/">&ldquo;How Many Test Users in a Usability Study?&rdquo;</a>, Nielsen Norman Group. Source for: five for qualitative studies; at least twenty for statistically significant numbers; the &ldquo;insights, not numbers&rdquo; framing.</li>
-    <li id="s3">Jakob Nielsen, <a href="https://www.nngroup.com/articles/first-rule-of-usability-dont-listen-to-users/">&ldquo;First Rule of Usability? Don't Listen to Users&rdquo;</a>, Nielsen Norman Group. Source for: watch what people do, not what they say.</li>
-    <li id="s4">Steve Krug, <a href="https://www.peachpit.com/store/rocket-surgery-made-easy-the-do-it-yourself-guide-to-9780321657299"><em>Rocket Surgery Made Easy</em></a>, New Riders / Peachpit. The &ldquo;a morning a month, three participants&rdquo; cadence is as described in published reviews &mdash; second-hand; verify against the book.</li>
-    <li id="s5">Karl Ulrich &amp; Steven Eppinger, <a href="https://books.google.com/books/about/Product_Design_and_Development.html?id=Qju5AAAAIAAJ"><em>Product Design and Development</em></a>, McGraw-Hill. Learning as a core purpose of prototypes, as summarised in secondary sources &mdash; second-hand; verify against the book.</li>
-    <li>The three places evidence hides, the four-line plan, and the pre-declared line are my own synthesis. Treat them as a working tool, and tell me when they stop fitting what happens on real hardware.</li>
+    <li id="s1">J. A. Hanley &amp; A. Lippman-Hand, <a href="https://jhanley.biostat.mcgill.ca/c607/ch08/zero_numerator.pdf">&ldquo;If Nothing Goes Wrong, Is Everything All Right? Interpreting Zero Numerators&rdquo;</a>, <em>JAMA</em> 249(13), 1983. Source for: the 3 &divide; <em>n</em> upper limit when no events occur. Attribution confirmed from secondary sources; the paper's text was not readable here &mdash; verify.</li>
+    <li id="s2"><a href="https://en.wikipedia.org/wiki/Rule_of_three_(statistics)">&ldquo;Rule of three (statistics)&rdquo;</a>, Wikipedia. Source for: the statement of the rule, and that it is a good approximation when <em>n</em> is greater than 30.</li>
+    <li id="s3">Accendo Reliability, <a href="https://accendoreliability.com/sample-size-success-testing/">&ldquo;Sample Size Success Testing&rdquo;</a>. Source for: the success-run formula <em>n</em> = ln(1 &minus; C) &divide; ln(R); 22 pieces for 90/90 and 59 for 95/95; and that one failure voids the formula. The small-group figures in the table above (39%, 26%, 10%) are my own arithmetic from that formula.</li>
+    <li id="s4">Karl Ulrich &amp; Steven Eppinger, <a href="https://books.google.com/books/about/Product_Design_and_Development.html?id=Qju5AAAAIAAJ"><em>Product Design and Development</em></a>, McGraw-Hill. Source for: learning as a core purpose of prototypes; interviews, focus groups and observing the product in use as the standard ways to gather customer data. Both points are as summarised in secondary sources &mdash; second-hand; verify against the book.</li>
+    <li>The four places evidence hides, the four-line plan, and the pre-declared line are my own synthesis. Treat them as a working tool, and tell me when they stop fitting what happens on real hardware.</li>
   </ol>
 
   <div class="ask-teacher">
@@ -232,7 +257,7 @@ That shows [it happens]. It doesn't show [how often].</div>
       <li><a href="../reference/justification-ladder.html">Reference &rarr; The Justification Ladder</a></li>
       <li><a href="../reference/decision-sentence.html">Reference &rarr; The Decision Sentence</a></li>
       <li><a href="0002-justify-at-the-right-rung.html">&larr; Lesson 02 &mdash; Justify at the Right Level</a></li>
-      <li>Next lesson &rarr; <em>not yet written.</em> Likely: reading a BOM well enough to argue with it, or what to do when the person objecting outranks the room.</li>
+      <li><a href="0004-when-the-objector-outranks-the-room.html">Next &rarr; Lesson 04 &mdash; When the Objector Outranks the Room</a></li>
     </ul>
   </nav>
 

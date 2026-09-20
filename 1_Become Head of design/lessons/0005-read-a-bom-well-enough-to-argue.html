@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 05 &middot; Read a BOM Well Enough to Argue With It</title>
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body data-lesson="0005">
+<main class="sheet">
+
+  <p class="kicker">Lesson 05 &middot; Commercial fluency</p>
+  <h1>Read a BOM Well Enough to Argue With It</h1>
+  <p class="subtitle">Every design decision lands somewhere in the bill of materials. Learn to find where, and you can say what it costs in the finance lead's terms.</p>
+
+  <div class="meta">
+    <span><b>Time</b> 30 minutes</span>
+    <span><b>Win</b> A defensible cost change on a real design decision</span>
+    <span><b>Builds on</b> <a href="0001-lead-with-the-number.html">Lesson 01</a></span>
+  </div>
+
+  <p class="lead"><a href="0001-lead-with-the-number.html">Lesson 01</a> taught the arithmetic: margin, COGS, volume. It didn't say where the numbers come from. Most of them come from one document, and designers are often the people who understand it least &mdash; even though almost every choice they make is a line in it.</p>
+
+  <p>A <strong>BOM</strong> &mdash; bill of materials &mdash; is the list of every part in the product: what it is, how many, what it's made from, and who supplies it. With prices attached it becomes the backbone of COGS. You don't need to become a cost engineer. You need to read it well enough to answer one question when someone says <em>&ldquo;that will cost more&rdquo;</em>: <strong>by how much, and where?</strong></p>
+
+  <p class="marginnote"><b>Where this comes from.</b> The cost categories follow the chapter structure of Ulrich and Eppinger's design-for-manufacturing chapter,<a class="cite" href="#s1">1</a> and the part-count test is the Boothroyd Dewhurst method.<a class="cite" href="#s2">2</a> The three-pass reading and the worked example are my own. I don't yet know whether you can see your product's prices &mdash; the section below covers both cases.</p>
+
+  <h2>Where the cost sits</h2>
+
+  <p>Ulrich and Eppinger's design-for-manufacturing chapter breaks the job of estimating manufacturing cost into a short list: the bill of materials, the cost of standard components, the cost of custom components, the cost of assembly, and overhead &mdash; with a distinction between fixed and variable costs running through it.<a class="cite" href="#s1">1</a> In plain words:</p>
+
+  <div class="table-wrap wide">
+  <table>
+    <thead><tr><th>Where it sits</th><th>What it means</th><th>Where a design decision lands</th></tr></thead>
+    <tbody>
+      <tr><td><b>Standard parts</b></td><td>Bought off the shelf: screws, springs, bearings.</td><td>Choosing a standard part over a special one; how many fasteners you specify.</td></tr>
+      <tr><td><b>Custom parts</b></td><td>Made to your drawing: moulded, cast, machined.</td><td>Material, process, finish, tolerance &mdash; and the tool that makes them.</td></tr>
+      <tr><td><b>Assembly</b></td><td>Labour and time to put it together.</td><td>Part count, fixings, how many steps and orientations.</td></tr>
+      <tr><td><b>Overhead</b></td><td>Support and indirect costs allocated to the product.</td><td>Mostly not yours &mdash; but complexity feeds it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Two of those live in a different place from the rest. <strong>Variable</strong> costs are paid on every unit. <strong>Fixed</strong> costs &mdash; the tool above all &mdash; are paid once. When a tool costs &pound;40,000 and you sell 40,000 units, it adds &pound;1.00 to every unit &mdash; the same amortisation you met in Lesson 01. Keeping the two separate is what stops a one-off from being argued as if it were a recurring cost.</p>
+
+  <h2>Three passes</h2>
+
+  <p>Don't read a BOM from top to bottom. Read it three times, each for one thing.</p>
+
+  <div class="slots">
+    <div class="slot">
+      <div class="slot-name">Count<span>pass one</span></div>
+      <div class="slot-body">How many lines? How many distinct parts? How many fasteners? How many suppliers? Nothing else. Every part is a line in the cost, a step in assembly and a possible failure &mdash; the number alone tells you how complex the product really is.</div>
+    </div>
+    <div class="slot">
+      <div class="slot-name">Rank<span>pass two</span></div>
+      <div class="slot-body">Sort by cost and see what the top five lines hold, as a share of the total. In many products a few lines carry most of the cost &mdash; but check yours rather than assume it. That share tells you where an argument is worth having.</div>
+    </div>
+    <div class="slot">
+      <div class="slot-name">Question<span>pass three</span></div>
+      <div class="slot-body">For each of those top lines: standard or custom? What process makes it? Is the cost fixed or variable? Which decision of mine sets it &mdash; material, finish, shape, tolerance, or the fact that it exists at all?</div>
+    </div>
+  </div>
+
+  <h2>The cheapest part is the one that isn't there</h2>
+
+  <p>The most direct way a designer takes cost out is to remove a part. Boothroyd and Dewhurst's method gives a test for whether a part must be separate. It must be only if it meets at least one of three conditions:<a class="cite" href="#s2">2</a></p>
+
+  <ol>
+    <li><strong>Does it move relative to all adjacent parts</strong> during normal operation?</li>
+    <li><strong>Must it be a different material</strong> from its neighbours, for functional reasons?</li>
+    <li><strong>Must it be separate</strong> so that other parts can be assembled or taken apart?</li>
+  </ol>
+
+  <p>A part that passes none of the three is a candidate for merging with a neighbour.<a class="cite" href="#s2">2</a> That is a question, not a verdict &mdash; a merged part may need a bigger tool or a stronger material, and you have to cost both sides. The same page says every part removed takes away its material, its manufacturing, its fasteners, its assembly time and a potential failure point;<a class="cite" href="#s2">2</a> it also quotes typical results of 40&ndash;60% fewer parts with 20&ndash;50% cost savings. That page belongs to a company that sells this method, so treat those figures as a reason to look, not as a forecast for your product.</p>
+
+  <h2>From a line to an argument</h2>
+
+  <p>Here is a small BOM, with <strong>invented numbers for the arithmetic</strong> &mdash; yours come from the real one.</p>
+
+  <div class="table-wrap wide">
+  <table>
+    <thead><tr><th>Line</th><th>Qty</th><th>Type</th><th>Made by</th><th>&pound; per unit</th></tr></thead>
+    <tbody>
+      <tr><td>Housing</td><td>1</td><td>Custom</td><td>Injection moulding</td><td>3.20</td></tr>
+      <tr><td>Cover</td><td>1</td><td>Custom</td><td>Injection moulding</td><td>1.40</td></tr>
+      <tr><td>Screws</td><td>2</td><td>Standard</td><td>Bought in</td><td>0.10</td></tr>
+      <tr><td>Hinge pin</td><td>1</td><td>Standard</td><td>Bought in</td><td>0.35</td></tr>
+      <tr><td>Spring</td><td>1</td><td>Standard</td><td>Bought in</td><td>0.20</td></tr>
+      <tr><td>Latch</td><td>1</td><td>Custom</td><td>Die casting</td><td>2.10</td></tr>
+      <tr><td>Assembly</td><td>&mdash;</td><td>Labour</td><td>In-house</td><td>0.90</td></tr>
+      <tr><td><b>Total</b></td><td></td><td></td><td></td><td><b>8.25</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The cover screws to the housing, never moves against it, is the same material, and needs no service access. It fails all three tests. Suppose the merged housing costs &pound;0.80 more (a bigger tool, more material), the cover and screws disappear, and assembly saves &pound;0.30. The net change per unit is <em>+0.80 &minus; 1.40 &minus; 0.10 &minus; 0.30 = &minus;1.00</em>: a pound off every unit.</p>
+
+  <p>Now turn it into a Lesson 01 sentence:</p>
+
+  <div class="formula">Merging the cover into the housing takes £1.00 out of every unit &mdash;
+£40k a year at 40,000 units &mdash; for a one-off £12k on the tool.</div>
+
+  <p>That is a claim finance can check: a per-unit change, a volume, a one-off, and the payback (&pound;12k against &pound;40k a year is about four months). One rule for using it: until purchasing or the supplier has quoted, say <strong>&ldquo;estimated&rdquo;</strong> and say who the estimate is from. An estimate presented as a quote is a small over-claim &mdash; the same mistake as in Lesson 02, in pounds.</p>
+
+  <div class="callout">
+    <p class="callout-title">If you can't see the prices</p>
+    <p>Two steps are still open to you. First, get the <em>structure</em> without the prices &mdash; the part list, quantities, materials and processes usually sit with engineering, and pass one (count) needs nothing else. Second, ask finance or purchasing for something narrow: cost by category, or just the top five lines. A designer who has never seen the product's cost is common; asking a specific, small question is how you find out whether that's an accident or a policy. Either way, the answer is worth knowing.</p>
+  </div>
+
+  <h2>Retrieval check</h2>
+
+  <p>From memory. Four questions &mdash; two reach back, to Lessons 03 and 01.</p>
+
+  <div class="quiz" data-quiz>
+    <p class="quiz-tag">One of four</p>
+    <p class="quiz-q">A cover screws onto a housing. It never moves against it, shares its material, and needs no service access. What does the part-count test suggest?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct data-fb="It passes none of the three conditions for being a separate part, so it's a candidate to merge. It's a question to cost, not a verdict &mdash; the merged housing may need a bigger tool.">Consider merging it into the housing as a single part.</button>
+      <button class="quiz-opt" data-fb="Each part is a line in the cost and a step in assembly, and it needs to earn its place by one of the three conditions. &ldquo;Deserving its own tool&rdquo; isn't one of them.">Keep it separate, since every part deserves its own tooling.</button>
+      <button class="quiz-opt" data-fb="Cheaper screws shave pennies and leave the real question &mdash; whether the part needs to exist &mdash; unasked. The test is about part count, not part price.">Swap the screws for cheaper screws and leave the part.</button>
+      <button class="quiz-opt" data-fb="Thinner walls might trim material, but they don't touch the question the test asks. The cover still passes none of the three conditions for being separate.">Make it thinner so the material cost per part drops.</button>
+    </div>
+  </div>
+
+  <div class="quiz" data-quiz>
+    <p class="quiz-tag">Two of four</p>
+    <p class="quiz-q">A tool costs &pound;40,000 and the product sells 40,000 units. How much tooling cost does each unit carry?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct data-fb="40,000 &divide; 40,000 = &pound;1.00. A fixed cost spread over the units it serves &mdash; and the reason to keep fixed and variable costs apart.">One pound per unit</button>
+      <button class="quiz-opt" data-fb="&pound;0.10 would need a tool ten times cheaper, or ten times the volume. Check the arithmetic: 40,000 divided by 40,000 is one.">Ten pence per unit</button>
+      <button class="quiz-opt" data-fb="&pound;10 would mean the tool cost &pound;400,000 across those units. The division was slipped by a factor of ten.">Ten pounds per unit</button>
+      <button class="quiz-opt" data-fb="&pound;40 is the tool cost in thousands with the volume ignored. Fixed costs are spread over the units, not charged to each one.">Forty pounds per unit</button>
+    </div>
+  </div>
+
+  <div class="quiz" data-quiz>
+    <p class="quiz-tag">Three of four &middot; from Lesson 03</p>
+    <p class="quiz-q">You suspect a bracket fails in the field. Working cheapest first, where do you look first?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct data-fb="Someone already holds the data, it costs hours rather than an afternoon, and the slice is specific. Start with what the company already owns.">Ask for returns coded to that bracket, last year.</button>
+      <button class="quiz-opt" data-fb="A sound method, but it costs an afternoon and belongs after the free source. Cheapest first, and stop as soon as one answers the question.">Book six riders for an afternoon of hands-on testing.</button>
+      <button class="quiz-opt" data-fb="A stand-in takes days and can't tell you about the field failures you already suspect. It's the most expensive route on the list.">Print a stand-in bracket and test it over days.</button>
+      <button class="quiz-opt" data-fb="Asking people which they'd prefer collects opinions &mdash; level 5 with a bigger audience. Observed or measured data, not preference, is what makes it evidence.">Ask riders which bracket design they'd prefer to use.</button>
+    </div>
+  </div>
+
+  <div class="quiz" data-quiz>
+    <p class="quiz-tag">Four of four &middot; from Lesson 01</p>
+    <p class="quiz-q">A part change cuts COGS by &pound;4 a unit at 40,000 units a year. What is the annual gross profit gain?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" data-correct data-fb="4 &times; 40,000 = &pound;160,000. The per-unit change times the volume it assumes &mdash; the version of the fact you'd actually say out loud.">One hundred sixty thousand pounds</button>
+      <button class="quiz-opt" data-fb="&pound;10,000 divides 40,000 by 4 instead of multiplying. A per-unit saving scales <em>up</em> with volume, never down.">Ten thousand pounds</button>
+      <button class="quiz-opt" data-fb="&pound;44,000 adds 4 to 40,000 &mdash; treating a per-unit figure and a volume as if they shared a unit. They multiply.">Forty-four thousand pounds</button>
+      <button class="quiz-opt" data-fb="&pound;4,000 drops two zeros from the volume. At 40,000 units a year, four pounds a unit is a much larger number.">Four thousand pounds</button>
+    </div>
+  </div>
+
+  <h2>Now do it on something real</h2>
+
+  <p>Use the same decision as before if it touches a part; otherwise pick the part decision you're most likely to be asked about.</p>
+
+  <div class="carry" data-carry="0001:decision" data-carry-label="Your decision, from Lesson 01" data-carry-empty="You haven't filled in Lesson 01's practice block yet &mdash; go and do that one first, or choose a part decision of your own."></div>
+
+  <div class="practice">
+    <p class="practice-tag">Read your own BOM</p>
+
+    <label>Which product, where its BOM lives, and whether you can see prices <span>if you can't, write who you'll ask and what narrow question you'll put to them</span></label>
+    <textarea data-practice="bom" rows="3"></textarea>
+
+    <label>Pass one: the count <span>lines, distinct parts, fasteners, suppliers</span></label>
+    <textarea data-practice="count" rows="2"></textarea>
+
+    <label>Pass two and three: your top three cost lines <span>what each is, standard or custom, what makes it, fixed or variable</span></label>
+    <textarea data-practice="top" rows="4"></textarea>
+
+    <label>The design decision that moves one of them <span>and which of the three part-count questions it answers, if it removes a part</span></label>
+    <textarea data-practice="lever" rows="3"></textarea>
+
+    <label>Your sentence <span>per unit, per year at your volume, the one-off &mdash; and whether it's an estimate, and whose</span></label>
+    <textarea data-practice="delta" rows="3"></textarea>
+
+    <p class="save-state" data-save-state></p>
+  </div>
+
+  <h3>Mark your own work</h3>
+
+  <ul class="checklist">
+    <li><label><input type="checkbox" data-check="c1"><span>I've counted the lines, parts, fasteners and suppliers &mdash; not estimated them.</span></label></li>
+    <li><label><input type="checkbox" data-check="c2"><span>I've kept the one-off cost apart from the per-unit cost.</span></label></li>
+    <li><label><input type="checkbox" data-check="c3"><span>My sentence names a volume, and says whether the figure is an estimate.</span></label></li>
+    <li><label><input type="checkbox" data-check="c4"><span>I've costed the other side of any merge &mdash; the bigger tool, the stronger material.</span></label></li>
+  </ul>
+
+  <h2>This week</h2>
+
+  <ul class="checklist">
+    <li><label><input type="checkbox" data-check="w1"><span>Get hold of the BOM for one product &mdash; with prices, or without. If it takes more than one email, note who said no and why.</span></label></li>
+    <li><label><input type="checkbox" data-check="w2"><span>Run the three passes on it in twenty minutes.</span></label></li>
+    <li><label><input type="checkbox" data-check="w3"><span>Bring me what you found, or what you were refused &mdash; both are useful.</span></label></li>
+  </ul>
+
+  <h2>Read this next</h2>
+
+  <p><strong>Boothroyd Dewhurst, <a href="https://www.dfma.com/resources/part-consolidation.asp">&ldquo;Part Consolidation&rdquo;</a>.</strong> A short, free page with the three part-count questions in full. It is written by a company that sells the method, so read the savings figures as their claim. For the whole cost-estimation approach behind the categories above, the design-for-manufacturing chapter of Ulrich and Eppinger's <em>Product Design and Development</em> is the standard textbook treatment.<a class="cite" href="#s1">1</a></p>
+
+  <h2>Sources</h2>
+  <ol class="sources">
+    <li id="s1">Karl Ulrich &amp; Steven Eppinger, <a href="https://books.google.com/books/about/Product_Design_and_Development.html?id=Qju5AAAAIAAJ"><em>Product Design and Development</em></a>, McGraw-Hill. Source for: the structure of manufacturing cost estimation &mdash; bill of materials, standard components, custom components, assembly, overhead, and fixed versus variable costs &mdash; as listed in summaries of the design-for-manufacturing chapter. Second-hand &mdash; verify against the book. The plain-words glosses in the table are mine.</li>
+    <li id="s2">Boothroyd Dewhurst, <a href="https://www.dfma.com/resources/part-consolidation.asp">&ldquo;Part Consolidation: Reduce Part Count to Cut Cost, Weight &amp; Complexity&rdquo;</a>. Source for: the three part-count conditions (relative motion, different material, assembly or disassembly); the effects of removing a part; the 40&ndash;60% and 20&ndash;50% figures, which are the vendor's own.</li>
+    <li>For the margin and COGS arithmetic, see the definitions already logged in <code>RESOURCES.md</code>: First Round Review on gross margin, and AccountingTools on COGS. The three-pass reading and the worked example, whose numbers are invented, are my own.</li>
+  </ol>
+
+  <div class="ask-teacher">
+    <p><strong>Bring me the awkward version.</strong> Worth asking: what to do when design isn't allowed to see COGS at all; how to cost the other side of a merge when you have no supplier quote; how to argue for a part that costs more but earns its place on level 2 evidence; or what to say when finance and purchasing give you different numbers for the same line.</p>
+  </div>
+
+  <nav class="footer-nav">
+    <ul>
+      <li><a href="../reference/bom-reading.html">Reference &rarr; Reading a BOM (one-page, prints well)</a></li>
+      <li><a href="../reference/decision-sentence.html">Reference &rarr; The Decision Sentence</a></li>
+      <li><a href="0004-when-the-objector-outranks-the-room.html">&larr; Lesson 04 &mdash; When the Objector Outranks the Room</a></li>
+      <li><a href="0006-show-the-trade-off-not-the-design.html">Next &rarr; Lesson 06 &mdash; Show the Trade-off, Not the Design</a></li>
+    </ul>
+  </nav>
+
+</main>
+<script src="../assets/quiz.js"></script>
+<script src="../assets/practice.js"></script>
+</body>
+</html>
