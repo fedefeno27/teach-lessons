@@ -17,3 +17,7 @@ Portfolio*.png
 
 # Not published yet
 2_ ETF investor/
+
+# Career folder — private working notes; only the course page is published
+0_Careear Ai from-prototypes-to-product/*
+!0_Careear Ai from-prototypes-to-product/ai-engineer-courses.html

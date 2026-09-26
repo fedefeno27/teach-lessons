@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Engineer — Course Sequence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Serif:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #E9E8E2; --surface: #F4F3EF; --ink: #23262A; --ink-soft: #575B60;
+    --line: #C6C4BB; --accent: #3C6E63; --accent-deep: #2A4F47; --mark: #AC4E2B;
+    --claude: #C15F3C; --claude-bg: #F6E6DE;
+    --serif: "IBM Plex Serif", Georgia, serif;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #1A1C1E; --surface: #232629; --ink: #E5E3DA; --ink-soft: #9BA09D;
+      --line: #3A3D3F; --accent: #6FAD9F; --accent-deep: #96C7BA; --mark: #DD7B53;
+      --claude: #E08A66; --claude-bg: #3A2A23;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 1.02rem/1.6 var(--sans); }
+  .sheet { max-width: 52rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  .eyebrow { font: 500 .72rem var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin: 0; }
+  h1 { font: 600 clamp(2rem, 1.4rem + 3vw, 2.8rem)/1.1 var(--serif); margin: .5rem 0 0; }
+  h2 { font: 600 1.5rem/1.2 var(--serif); margin: 0; }
+  .deck { color: var(--ink-soft); max-width: 42rem; margin: 1rem 0 0; }
+  a { color: var(--accent-deep); text-underline-offset: 2px; text-decoration-color: var(--line); }
+  a:hover { text-decoration-color: var(--accent); }
+
+  .progress { margin: 2rem 0 0; display: flex; align-items: center; gap: .9rem; font: 500 .8rem var(--mono); color: var(--ink-soft); }
+  .bar { flex: 1; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .bar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; margin: 1.2rem 0 0; font-size: .85rem; color: var(--ink-soft); }
+
+  section.phase { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .phase-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .when { font: 500 .75rem var(--mono); color: var(--ink-soft); text-transform: uppercase; letter-spacing: .06em; }
+  .goal { color: var(--ink-soft); margin: .5rem 0 1.2rem; }
+
+  ol.courses { list-style: none; padding: 0; margin: 0; display: grid; gap: .7rem; }
+  .course { display: grid; grid-template-columns: auto 2.4rem 1fr; gap: .8rem; align-items: start;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; }
+  .course.claude { border-left: 4px solid var(--claude); }
+  .course.done { opacity: .55; }
+  .course.done .title a { text-decoration: line-through; }
+  .course input { width: 1.1rem; height: 1.1rem; margin-top: .25rem; accent-color: var(--accent); cursor: pointer; }
+  .num { font: 500 .85rem var(--mono); color: var(--accent); padding-top: .15rem; }
+  .title { font-weight: 600; }
+  .title a { color: var(--ink); }
+  .by { font-size: .85rem; color: var(--ink-soft); }
+  .why { margin: .3rem 0 0; font-size: .93rem; }
+  .tags { margin-top: .45rem; display: flex; flex-wrap: wrap; gap: .35rem; }
+  .tag { font: 500 .68rem var(--mono); text-transform: uppercase; letter-spacing: .05em;
+    padding: .12rem .45rem; border-radius: 4px; border: 1px solid var(--line); color: var(--ink-soft); }
+  .tag.free { color: var(--accent-deep); border-color: var(--accent); }
+  .tag.paid { color: var(--mark); border-color: var(--mark); }
+  .tag.claude { color: var(--claude); background: var(--claude-bg); border-color: var(--claude); }
+  .tag.opt { border-style: dashed; }
+
+  .project { margin-top: .9rem; padding: .9rem 1rem; border: 1px dashed var(--accent); border-radius: 10px; font-size: .95rem; }
+  .project strong { color: var(--accent-deep); }
+
+  .skip { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .skip ul { padding-left: 1.2rem; }
+  .skip li { margin: .5rem 0; }
+  .note { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.2rem; margin-top: 1rem; font-size: .95rem; }
+  footer { margin-top: 3rem; font-size: .85rem; color: var(--ink-soft); }
+  @media (max-width: 540px) { .course { grid-template-columns: auto 1fr; } .num { display: none; } }
+</style>
+</head>
+<body>
+<main class="sheet">
+
+<p class="eyebrow">Career · AI Engineering · self-study</p>
+<h1>AI Engineer: the course sequence</h1>
+<p class="deck">The Cambridge ICE AI Engineering Career Accelerator syllabus rebuilt from free and cheap courses, in the order to take them. About 12 months at about 10 hrs/week. Claude-specific items are marked in orange. Tick items off as you go; progress saves in this browser.</p>
+
+<div class="progress"><span id="count">0 / 0</span><div class="bar"><span id="fill"></span></div></div>
+<div class="legend">
+  <span><span class="tag claude">Claude</span> Anthropic / Claude-specific</span>
+  <span><span class="tag free">Free</span> no cost</span>
+  <span><span class="tag paid">Paid</span> costs money</span>
+  <span><span class="tag opt">Optional</span> only if needed</span>
+</div>
+
+<!-- ============ PHASE 0 ============ -->
+<section class="phase">
+  <div class="phase-head"><h2>Phase 0 · Python and the plumbing</h2><span class="when">Weeks 1–8</span></div>
+  <p class="goal">Replaces Cambridge's "Foundations". Write this phase <strong>by hand</strong>, without Claude Code writing it for you, because interviews test whether you can read and debug code.</p>
+  <ol class="courses">
+    <li class="course" data-id="cs50p"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://cs50.harvard.edu/python/" target="_blank" rel="noopener">CS50P: Introduction to Programming with Python</a></div>
+      <div class="by">Harvard · 10 lectures + problem sets + final project</div>
+      <p class="why">The Python foundation. Do every problem set, because they are the course. Your JS background makes it faster.</p>
+      <div class="tags"><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course" data-id="missing"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener">The Missing Semester of Your CS Education</a></div>
+      <div class="by">MIT · take the shell, Git and debugging lectures</div>
+      <p class="why">Terminal, Git and debugging: the plumbing every engineering job assumes you have.</p>
+      <div class="tags"><span class="tag free">Free</span></div></div></li>
+
+    <li class="course" data-id="sqlbolt"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://sqlbolt.com/" target="_blank" rel="noopener">SQLBolt</a></div>
+      <div class="by">Interactive SQL lessons · a few evenings</div>
+      <p class="why">Enough SQL to run a Postgres vector store in Phase 1.</p>
+      <div class="tags"><span class="tag free">Free</span></div></div></li>
+
+    <li class="course claude" data-id="platform101"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://anthropic.skilljar.com/claude-platform-101" target="_blank" rel="noopener">Claude Platform 101</a></div>
+      <div class="by">Anthropic Academy</div>
+      <p class="why">Building on the Claude Platform from scratch: API keys, models, the Console, first calls.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course claude" data-id="claudeapi"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://anthropic.skilljar.com/claude-with-the-anthropic-api" target="_blank" rel="noopener">Building with the Claude API</a></div>
+      <div class="by">Anthropic Academy · the main Claude course</div>
+      <p class="why">The full spectrum of the Claude API: messages, system prompts, structured output, tool use, streaming, RAG and agents. It replaces most of the Udacity nanodegree for free.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course claude" data-id="prompttut"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial" target="_blank" rel="noopener">Prompt Engineering Interactive Tutorial</a></div>
+      <div class="by">Anthropic · GitHub notebooks · also see <a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">prompt engineering docs</a></div>
+      <p class="why">Hands-on prompting exercises: clear instructions, examples, XML structure, chaining, avoiding hallucination.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course claude" data-id="toolusedocs"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://docs.claude.com/en/docs/build-with-claude/tool-use" target="_blank" rel="noopener">Claude docs: Tool use</a></div>
+      <div class="by">Anthropic docs · plus <a href="https://github.com/anthropics/courses" target="_blank" rel="noopener">anthropics/courses</a> (the tool-use notebooks)</div>
+      <p class="why">How Claude calls your functions. It's the building block for everything in Phases 1–2.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course" data-id="huyen"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://huyenchip.com/books/" target="_blank" rel="noopener"><em>AI Engineering</em>: Chip Huyen (O'Reilly, 2025)</a></div>
+      <div class="by">Book · read one chapter a fortnight across the whole year</div>
+      <p class="why">The closest single text to the Cambridge syllabus: foundation models, evaluation, RAG, agents, fine-tuning, inference cost. Your textbook for the year.</p>
+      <div class="tags"><span class="tag paid">~£45</span><span class="tag">Core</span></div></div></li>
+  </ol>
+  <div class="project"><strong>Exit test:</strong> a Python command-line tool that calls Claude, uses one tool, and has three pytest tests. Push it to GitHub.</div>
+</section>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase">
+  <div class="phase-head"><h2>Phase 1 · RAG and your Claude Code workflow</h2><span class="when">Weeks 9–18</span></div>
+  <p class="goal">Cambridge Module 1: RAG and retrieval architecture. Claude Code becomes your daily tool from here on.</p>
+  <ol class="courses">
+    <li class="course claude" data-id="cc101"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://anthropic.skilljar.com/claude-code-101" target="_blank" rel="noopener">Claude Code 101</a></div>
+      <div class="by">Anthropic Academy · reference: <a href="https://docs.claude.com/en/docs/claude-code/overview" target="_blank" rel="noopener">Claude Code docs</a></div>
+      <p class="why">Using Claude Code effectively day to day. Quick for you, since you already ship with it. It fills the gaps.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course claude" data-id="ccaction"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://anthropic.skilljar.com/claude-code-in-action" target="_blank" rel="noopener">Claude Code in Action</a></div>
+      <div class="by">Anthropic Academy</div>
+      <p class="why">Long, hands-off sessions you can trust: steering, configuration, hooks, automation, verification.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course claude" data-id="vanderbilt-cc"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.coursera.org/learn/claude-code" target="_blank" rel="noopener">Claude Code: Software Engineering with Generative AI Agents</a></div>
+      <div class="by">Vanderbilt University · Jules White · Coursera · about 5 hrs · 4.7★</div>
+      <p class="why">Running Claude Code like a tech lead: parallel workflows, "best of N", automated test suites, context management. Complements Anthropic's two courses above.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free to audit</span></div></div></li>
+
+    <li class="course claude" data-id="aihero"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.aihero.dev/" target="_blank" rel="noopener">AI Hero: AI Coding Crash Course</a> (Matt Pocock)</div>
+      <div class="by">Already purchased · the basis of <code>index.html</code> in this folder</div>
+      <p class="why">Finish it here. It's your engineering-discipline layer: planning, TDD, and small verifiable steps with Claude Code. It's TypeScript, so it keeps your front-end strength sharp.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag paid">Owned</span></div></div></li>
+
+    <li class="course" data-id="dlrag"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.deeplearning.ai/courses/retrieval-augmented-generation" target="_blank" rel="noopener">Retrieval Augmented Generation (RAG)</a></div>
+      <div class="by">DeepLearning.AI</div>
+      <p class="why">The main RAG course: embeddings, chunking, vector databases, hybrid search, re-ranking, production concerns.</p>
+      <div class="tags"><span class="tag free">Free (audit)</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course claude" data-id="contextual"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.anthropic.com/engineering/contextual-retrieval" target="_blank" rel="noopener">Introducing Contextual Retrieval</a></div>
+      <div class="by">Anthropic engineering article · code in <a href="https://github.com/anthropics/claude-cookbooks/tree/main/capabilities/retrieval_augmented_generation" target="_blank" rel="noopener">Claude Cookbooks: RAG</a></div>
+      <p class="why">Anthropic's RAG technique (contextual embeddings + contextual BM25 + re-ranking). Work through the cookbook notebook alongside it.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course" data-id="advrag"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/" target="_blank" rel="noopener">Building and Evaluating Advanced RAG</a></div>
+      <div class="by">DeepLearning.AI short course · about 1 hr</div>
+      <p class="why">Advanced retrieval and your first RAG metrics: context relevance, groundedness, answer relevance.</p>
+      <div class="tags"><span class="tag free">Free</span></div></div></li>
+
+    <li class="course" data-id="fastapi"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://fastapi.tiangolo.com/tutorial/" target="_blank" rel="noopener">FastAPI Tutorial</a> + <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener">pgvector</a></div>
+      <div class="by">Official docs · setup with <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a></div>
+      <p class="why">The back end you'll build Project 1 on: a Python API plus Postgres with vector search.</p>
+      <div class="tags"><span class="tag free">Free</span></div></div></li>
+  </ol>
+  <div class="project"><strong>Project 1: "Ask the Manual".</strong> RAG over <em>public</em> product manuals (e-bikes, folding bikes, power tools). Page-level citations, and it refuses when the docs don't cover the question. Python + FastAPI + pgvector + Claude, with your own web front end. Deploy it.</div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase">
+  <div class="phase-head"><h2>Phase 2 · Agents, MCP and multi-agent systems</h2><span class="when">Weeks 19–28</span></div>
+  <p class="goal">Cambridge Module 2. Learn it from first principles (Stanford), then with Claude's own tools, then with frameworks.</p>
+  <ol class="courses">
+    <li class="course claude" data-id="bea"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents</a></div>
+      <div class="by">Anthropic engineering article · code in <a href="https://github.com/anthropics/claude-cookbooks/tree/main/patterns/agents" target="_blank" rel="noopener">Claude Cookbooks: agent patterns</a></div>
+      <p class="why">Read this first. Workflows (chaining, routing, parallelisation, orchestrator-workers, evaluator-optimiser) before autonomous agents. Explains when <em>not</em> to use an agent.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course" data-id="cs329z"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://cs329z.github.io/" target="_blank" rel="noopener">CS329Z: Engineering AI Agents</a></div>
+      <div class="by">Stanford · Fall 2026 · 17 lectures, 2 homeworks, about 50 readings</div>
+      <p class="why"><strong>The core of this phase.</strong> Build RAG, tool use and agent loops with no framework, then see how frameworks abstract them. Graded on design decisions and evals, not recall. Do both homeworks.</p>
+      <div class="tags"><span class="tag free">Free (public materials)</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course claude" data-id="mcpintro"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://anthropic.skilljar.com/introduction-to-model-context-protocol" target="_blank" rel="noopener">Introduction to Model Context Protocol</a></div>
+      <div class="by">Anthropic Academy · reference: <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></div>
+      <p class="why">Build MCP servers and clients from scratch in Python: tools, resources, prompts.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course claude" data-id="mcpadv"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://anthropic.skilljar.com/model-context-protocol-advanced-topics" target="_blank" rel="noopener">Model Context Protocol: Advanced Topics</a></div>
+      <div class="by">Anthropic Academy</div>
+      <p class="why">Sampling, notifications, file-system access, transports: what production MCP servers need.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course claude" data-id="tools4agents"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.anthropic.com/engineering/writing-tools-for-agents" target="_blank" rel="noopener">Writing Effective Tools for Agents</a> · <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">Effective Context Engineering</a></div>
+      <div class="by">Anthropic engineering articles</div>
+      <p class="why">Tool design and context management. Two of the five domains of Anthropic's architect certification.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course claude" data-id="agentsdk"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://docs.claude.com/en/docs/agent-sdk/overview" target="_blank" rel="noopener">Claude Agent SDK</a></div>
+      <div class="by">Anthropic docs</div>
+      <p class="why">The harness behind Claude Code, available to you: agent loop, tools, permissions, subagents, sessions. Use it for Project 2.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course claude" data-id="multiagent"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.anthropic.com/engineering/multi-agent-research-system" target="_blank" rel="noopener">How We Built Our Multi-Agent Research System</a></div>
+      <div class="by">Anthropic engineering article</div>
+      <p class="why">A real production multi-agent case study: orchestrator + subagents, token cost, evaluation, failure modes.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course claude" data-id="subagents"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://anthropic.skilljar.com/introduction-to-subagents" target="_blank" rel="noopener">Introduction to Subagents</a> · <a href="https://anthropic.skilljar.com/introduction-to-agent-skills" target="_blank" rel="noopener">Introduction to Agent Skills</a></div>
+      <div class="by">Anthropic Academy · two short courses</div>
+      <p class="why">Delegating to specialised subagents and packaging reusable skills. These are multi-agent patterns in practice.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course" data-id="hfagents"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://huggingface.co/learn/agents-course" target="_blank" rel="noopener">Hugging Face Agents Course</a></div>
+      <div class="by">Hugging Face · 4 units, about 15–20 hrs · free certificate</div>
+      <p class="why">The framework layer: smolagents, LlamaIndex, LangGraph, agentic RAG, and a benchmarked final challenge. Covers LangGraph, so no separate LangGraph course is needed.</p>
+      <div class="tags"><span class="tag free">Free + certificate</span><span class="tag">Core</span></div></div></li>
+  </ol>
+  <div class="project"><strong>Project 2: design-review agent.</strong> Built on the Claude Agent SDK plus your own MCP server. It takes a spec or BOM (public or invented), checks part count, materials, standards and cost targets, cites its sources, and waits for human approval before acting.</div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase">
+  <div class="phase-head"><h2>Phase 3 · Evaluation and LLMOps</h2><span class="when">Weeks 29–36</span></div>
+  <p class="goal">Cambridge Module 3. This is where your product judgement becomes an engineering skill: evals are quality specifications.</p>
+  <ol class="courses">
+    <li class="course" data-id="hamel1"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://hamel.dev/blog/posts/evals/" target="_blank" rel="noopener">Your AI Product Needs Evals</a> · <a href="https://hamel.dev/blog/posts/field-guide/" target="_blank" rel="noopener">A Field Guide to Rapidly Improving AI Products</a></div>
+      <div class="by">Hamel Husain · articles</div>
+      <p class="why">Error analysis first, metrics second. The most practical eval thinking available for free.</p>
+      <div class="tags"><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course claude" data-id="claudeevals"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://docs.claude.com/en/docs/test-and-evaluate/define-success" target="_blank" rel="noopener">Define Success Criteria</a> · <a href="https://docs.claude.com/en/docs/test-and-evaluate/develop-tests" target="_blank" rel="noopener">Create Strong Empirical Evaluations</a></div>
+      <div class="by">Anthropic docs</div>
+      <p class="why">Anthropic's method for writing measurable criteria and building eval sets, including grading with Claude as the judge.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span></div></div></li>
+
+    <li class="course" data-id="evalagents"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.deeplearning.ai/short-courses/evaluating-ai-agents/" target="_blank" rel="noopener">Evaluating AI Agents</a></div>
+      <div class="by">DeepLearning.AI × Arize · short course</div>
+      <p class="why">Tracing, evaluating each step of an agent, LLM-as-judge, running experiments to improve it.</p>
+      <div class="tags"><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course" data-id="observability"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://langfuse.com/docs" target="_blank" rel="noopener">Langfuse</a> or <a href="https://phoenix.arize.com/" target="_blank" rel="noopener">Arize Phoenix</a></div>
+      <div class="by">Open-source observability · pick one</div>
+      <p class="why">Traces, cost and latency dashboards, datasets and experiments. Wire it into both projects.</p>
+      <div class="tags"><span class="tag free">Free (self-host / free tier)</span></div></div></li>
+
+    <li class="course" data-id="fsdl"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://fullstackdeeplearning.com/llm-bootcamp/" target="_blank" rel="noopener">LLM Bootcamp</a></div>
+      <div class="by">Full Stack Deep Learning · take the deployment and LLMOps lectures</div>
+      <p class="why">Deployment and ops fundamentals. It's from 2023, so the tooling is dated, but the principles still hold.</p>
+      <div class="tags"><span class="tag free">Free</span><span class="tag opt">Optional</span></div></div></li>
+  </ol>
+  <div class="project"><strong>Upgrade both projects:</strong> a golden test set labelled by you, an LLM judge checked against your labels, regression evals in GitHub Actions, tracing, and a cost/latency dashboard. Dockerise and deploy.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase">
+  <div class="phase-head"><h2>Phase 4 · Security, governance and cost</h2><span class="when">Weeks 37–42</span></div>
+  <p class="goal">Cambridge Modules 4 and 5. The recommended list you were sent had nothing for these.</p>
+  <ol class="courses">
+    <li class="course" data-id="owasp"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://genai.owasp.org/llm-top-10/" target="_blank" rel="noopener">OWASP Top 10 for LLM Applications</a></div>
+      <div class="by">OWASP GenAI Security Project</div>
+      <p class="why">Prompt injection, sensitive-data leakage, excessive agency, and more. The industry-standard risk list.</p>
+      <div class="tags"><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course" data-id="redteam"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/" target="_blank" rel="noopener">Red Teaming LLM Applications</a></div>
+      <div class="by">DeepLearning.AI × Giskard · short course</div>
+      <p class="why">Attack your own apps systematically. Then red-team Project 2 and write up the findings and fixes.</p>
+      <div class="tags"><span class="tag free">Free</span></div></div></li>
+
+    <li class="course claude" data-id="caching"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://docs.claude.com/en/docs/build-with-claude/prompt-caching" target="_blank" rel="noopener">Prompt Caching</a> · <a href="https://docs.claude.com/en/docs/build-with-claude/batch-processing" target="_blank" rel="noopener">Batch Processing</a> · <a href="https://docs.claude.com/en/docs/about-claude/models/choosing-a-model" target="_blank" rel="noopener">Choosing a Model</a></div>
+      <div class="by">Anthropic docs</div>
+      <p class="why">The three biggest cost levers on Claude: cache repeated context, batch non-urgent work, route easy tasks to cheaper models. Show cost per 1,000 queries before and after.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course" data-id="memo"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="../1_Become%20Head%20of%20design/lessons/0001-lead-with-the-number.html">Lead With the Number</a> (your own lesson)</div>
+      <div class="by">Head of Design course · Lesson 01</div>
+      <p class="why">Cambridge's "stakeholder communication": write a one-page decision memo for a non-technical exec, with the number first.</p>
+      <div class="tags"><span class="tag free">Free</span></div></div></li>
+  </ol>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase">
+  <div class="phase-head"><h2>Phase 5 · Capstone and credentials</h2><span class="when">Weeks 43–52</span></div>
+  <p class="goal">Replaces the Cambridge employer capstone and Demo Day. It feeds the month-12 gate in <code>plan.md</code>.</p>
+  <ol class="courses">
+    <li class="course" data-id="capstone"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title">Capstone: an internal AI tool at work</div>
+      <div class="by">Real brief, real users</div>
+      <p class="why">Agree 2–3 outcomes up front (adoption %, hours saved). Write the case study as you build. Demo Day equivalent: a 3-minute video per project, a README with architecture + evals + cost, a LinkedIn post, one London meetup talk.</p>
+      <div class="tags"><span class="tag free">Free</span><span class="tag">Core</span></div></div></li>
+
+    <li class="course claude" data-id="cca"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://anthropic.skilljar.com/claude-certified-architect-foundations-certification/444989" target="_blank" rel="noopener">Claude Certified Architect: Foundations (CCA-F)</a></div>
+      <div class="by">Anthropic · proctored · about $125</div>
+      <p class="why">Anthropic's official technical certification. Domains: agentic architecture, Claude Code workflows, prompting and structured output, tools and MCP, context management. This plan covers all five. <strong>Currently limited to Claude Partner Network organisations (partner email required)</strong>, so watch for public access.</p>
+      <div class="tags"><span class="tag claude">Claude</span><span class="tag paid">~$125</span><span class="tag opt">Optional · when open</span></div></div></li>
+
+    <li class="course" data-id="mslearn"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://learn.microsoft.com/en-us/training/paths/develop-ai-agents-azure/" target="_blank" rel="noopener">Develop AI Agents on Azure</a></div>
+      <div class="by">Microsoft Learn learning path</div>
+      <p class="why">Prep for AI-103. Only if target employers run on Azure / Microsoft Foundry.</p>
+      <div class="tags"><span class="tag free">Free</span><span class="tag opt">Optional</span></div></div></li>
+
+    <li class="course" data-id="ai103"><input type="checkbox" aria-label="done"><span class="num"></span><div>
+      <div class="title"><a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-apps-and-agents-developer-associate/" target="_blank" rel="noopener">AI-103: Azure AI Apps and Agents Developer Associate</a></div>
+      <div class="by">Microsoft · proctored, 120 min · <a href="https://aka.ms/AI103-StudyGuide" target="_blank" rel="noopener">study guide</a></div>
+      <p class="why">A proctored credential open to individuals now. It replaced AI-102 "Azure AI Engineer" in June 2026.</p>
+      <div class="tags"><span class="tag paid">~$165</span><span class="tag opt">Optional</span></div></div></li>
+  </ol>
+</section>
+
+<!-- ============ SKIPPED ============ -->
+<section class="skip">
+  <h2>Considered and skipped</h2>
+  <ul>
+    <li><a href="https://www.udacity.com/course/ai-engineering-with-claude--nd7426" target="_blank" rel="noopener">Udacity: AI Engineering with Claude</a>: $999 or $249/month for about 38 hrs. Anthropic Academy covers the same ground (API, Claude Code, Agent SDK, MCP) for free. Worth it only at a steep discount if you want human project reviews.</li>
+    <li><a href="https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/" target="_blank" rel="noopener">DeepLearning.AI: AI Agents in LangGraph</a>: already covered by the Hugging Face Agents Course. Take it only if a job ad asks for LangGraph.</li>
+    <li><a href="https://www.coursera.org/professional-certificates/ibm-rag-and-agentic-ai" target="_blank" rel="noopener">IBM RAG and Agentic AI Professional Certificate</a>: 9–10 courses, heavy on LangChain, needs a Coursera subscription. Phase 1 covers RAG more directly.</li>
+  </ul>
+  <h3>From your "Ai course" bookmarks</h3>
+  <ul>
+    <li><a href="https://www.coursera.org/specializations/python" target="_blank" rel="noopener">Python for Everybody</a> (Michigan): a good course, but pick one Python course. CS50P is harder and more engineering-focused, which suits someone who already writes JS. Use PY4E only if CS50P feels too steep.</li>
+    <li><a href="https://www.coursera.org/learn/claude-code-in-action" target="_blank" rel="noopener">Claude Code in Action (Coursera)</a>: the same Anthropic course as the free Anthropic Academy version in Phase 1. Coursera charges for the certificate.</li>
+    <li><a href="https://www.coursera.org/specializations/real-world-ai-for-everyone" target="_blank" rel="noopener">Real-World AI with Claude</a>: Anthropic + AWIT, aimed at <em>non-technical</em> professionals. Below your level.</li>
+    <li><a href="https://www.coursera.org/specializations/mastering-claude-ai-prompting-apis-rag-and-mcp" target="_blank" rel="noopener">Mastering Claude AI</a> (Edureka): 3.8★ from 29 reviews. Anthropic's own free API and MCP courses cover the same topics better.</li>
+    <li><a href="https://www.coursera.org/learn/advanced-multi-agent-ai-system" target="_blank" rel="noopener">Advanced Multi-Agent AI System</a>: 3 hrs, no named institution, AI-graded. CS329Z + Anthropic's multi-agent material go much deeper.</li>
+    <li><a href="https://www.coursera.org/specializations/ai-engineering" target="_blank" rel="noopener">AI Engineering (Scrimba)</a>: 9 courses, about 20 hrs, in JavaScript. Tempting given your JS, but built around OpenAI, and parts are dated (Assistants API, DALL·E). Optional warm-up at most.</li>
+    <li><a href="https://www.coursera.org/professional-certificates/ibm-generative-ai-engineering" target="_blank" rel="noopener">IBM Generative AI Engineering</a>: 16 courses, about 6 months. Well rated, but it's the <em>ML-engineer</em> path (PyTorch, Keras, fine-tuning transformers), not the product AI-engineer path this plan targets.</li>
+    <li><a href="https://www.udacity.com/masters-artificial-intelligence" target="_blank" rel="noopener">Udacity MSc in AI</a> (Woolf University): about $5,000, about 2,250 hours, about 25 hrs/week. Cambridge-level cost, and the hours don't fit alongside a full-time job.</li>
+    <li><a href="https://aiengineeringfromscratch.com/" target="_blank" rel="noopener">AI Engineering from Scratch</a>: free and open source, but 523 lessons from linear algebra up. Use it as a reference to dip into, not as a course to follow.</li>
+  </ul>
+  <div class="note"><strong>Rules:</strong> build more than you watch (two thirds building, under a third video) · ship something deployed every 6 weeks · keep the design portfolio work in <code>plan.md</code> running alongside this.</div>
+</section>
+
+<footer>Prepared 26 Sep 2026. All links checked that day. Companion to <code>ai-engineer-plan.md</code>. Total cost about £45 + API credits (about £10–20/month), plus optional exams, compared with £5,495–8,495 for the Cambridge programme.</footer>
+</main>
+
+<script>
+  const KEY = 'ai-engineer-courses-v1';
+  const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+  const items = [...document.querySelectorAll('.course')];
+  items.forEach((li, i) => {
+    li.querySelector('.num').textContent = String(i + 1).padStart(2, '0');
+    const box = li.querySelector('input');
+    box.checked = !!saved[li.dataset.id];
+    li.classList.toggle('done', box.checked);
+    box.addEventListener('change', () => {
+      saved[li.dataset.id] = box.checked;
+      localStorage.setItem(KEY, JSON.stringify(saved));
+      li.classList.toggle('done', box.checked);
+      update();
+    });
+  });
+  function update() {
+    const n = items.filter(li => li.querySelector('input').checked).length;
+    document.getElementById('count').textContent = n + ' / ' + items.length;
+    document.getElementById('fill').style.width = (100 * n / items.length) + '%';
+  }
+  update();
+</script>
+</body>
+</html>
