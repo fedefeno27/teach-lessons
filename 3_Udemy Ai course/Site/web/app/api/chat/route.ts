@@ -3,6 +3,12 @@ import { MODEL, systemPrompt } from "@/lib/twin";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const MAX_REPLY_TOKENS = 500; // keeps answers short (~120 words) and cheap
+const TEMPERATURE = 0.6; // low enough to stay factual, high enough to sound natural
+const MAX_HISTORY = 12; // most recent messages sent to the model
+const MAX_MESSAGE_CHARS = 800; // per-message cap on visitor input
+const RATE_LIMIT_PER_MIN = 12;
+
 type Msg = { role: "user" | "assistant"; content: string };
 
 // Minimal in-memory rate limit (per server instance) to protect the API key.
@@ -12,7 +18,7 @@ function limited(ip: string) {
   const recent = (hits.get(ip) ?? []).filter((t) => now - t < 60_000);
   recent.push(now);
   hits.set(ip, recent);
-  return recent.length > 12;
+  return recent.length > RATE_LIMIT_PER_MIN;
 }
 
 const text = (s: string, status = 200) =>
@@ -30,8 +36,8 @@ export async function POST(req: Request) {
     const body = await req.json();
     messages = (body.messages as Msg[])
       .filter((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
-      .slice(-12)
-      .map((m) => ({ role: m.role, content: m.content.slice(0, 800) }));
+      .slice(-MAX_HISTORY)
+      .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_MESSAGE_CHARS) }));
   } catch {
     return text("Bad request.", 400);
   }
@@ -48,8 +54,8 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: MODEL,
         stream: true,
-        max_tokens: 500,
-        temperature: 0.6,
+        max_tokens: MAX_REPLY_TOKENS,
+        temperature: TEMPERATURE,
         messages: [{ role: "system", content: systemPrompt() }, ...messages],
       }),
     }).catch(() => null);

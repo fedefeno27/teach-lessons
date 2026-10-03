@@ -270,7 +270,7 @@ All styling is plain CSS in one file, using CSS variables for fonts and colors. 
 
 2. **Validate the request body properly.** `route.ts` casts `body.messages as Msg[]` and relies on a `try/catch`. A schema validator such as Zod would reject malformed input explicitly and give clearer errors, instead of failing on any unexpected shape.
 
-3. **Move the model name and limits into environment variables.** `MODEL` is hard-coded in `lib/twin.ts`, and the `500` tokens, `0.6` temperature, and `800`-character cap are magic numbers in `route.ts`. Free models change or disappear often; reading `OPENROUTER_MODEL` from the environment (with a fallback) lets you switch without redeploying code, and named constants would explain the other numbers.
+3. **Move the model name and limits into environment variables.** *(Done: `MODEL` reads `OPENROUTER_MODEL` with a fallback, and the limits are now named constants at the top of `route.ts`.)* `MODEL` is hard-coded in `lib/twin.ts`, and the `500` tokens, `0.6` temperature, and `800`-character cap are magic numbers in `route.ts`. Free models change or disappear often; reading `OPENROUTER_MODEL` from the environment (with a fallback) lets you switch without redeploying code, and named constants would explain the other numbers.
 
 4. **Add automated tests.** There is no test script in `package.json`. Unit tests for `systemPrompt()` and the SSE parsing (the trickiest logic), plus a small Playwright test that opens the chat and checks a reply appears, would catch regressions when you swap models or change the prompt.
 

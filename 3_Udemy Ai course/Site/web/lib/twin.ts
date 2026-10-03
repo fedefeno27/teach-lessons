@@ -1,6 +1,7 @@
 import { profile, roles, capabilities, education, certifications, stats } from "@/lib/data";
 
-export const MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free";
+// Free models come and go: override with OPENROUTER_MODEL in .env without touching code.
+export const MODEL = process.env.OPENROUTER_MODEL?.trim() || "nvidia/nemotron-3-ultra-550b-a55b:free";
 
 export const suggestions = [
   "What do you do at Brompton?",
