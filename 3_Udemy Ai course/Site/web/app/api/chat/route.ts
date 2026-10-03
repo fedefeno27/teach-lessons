@@ -1,24 +1,75 @@
+import { z } from "zod";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 import { MODEL, systemPrompt } from "@/lib/twin";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const MAX_REPLY_TOKENS = 500; // keeps answers short (~120 words) and cheap
-const TEMPERATURE = 0.6; // low enough to stay factual, high enough to sound natural
-const MAX_HISTORY = 12; // most recent messages sent to the model
-const MAX_MESSAGE_CHARS = 800; // per-message cap on visitor input
+// Optional env override; falls back to the default if unset or not a number.
+const num = (v: string | undefined, d: number) => {
+  const n = v?.trim() ? Number(v) : NaN;
+  return Number.isFinite(n) ? n : d;
+};
+
+const MAX_REPLY_TOKENS = num(process.env.CHAT_MAX_TOKENS, 500); // keeps answers short (~120 words) and cheap
+const TEMPERATURE = num(process.env.CHAT_TEMPERATURE, 0.6); // low enough to stay factual, high enough to sound natural
+const MAX_HISTORY = num(process.env.CHAT_MAX_HISTORY, 12); // most recent messages sent to the model
+const MAX_MESSAGE_CHARS = num(process.env.CHAT_MAX_MESSAGE_CHARS, 800); // per-message cap on visitor input
 const RATE_LIMIT_PER_MIN = 12;
 
-type Msg = { role: "user" | "assistant"; content: string };
+const BodySchema = z.object({
+  messages: z.array(
+    z.object({
+      role: z.enum(["user", "assistant"]),
+      content: z.string().transform((s) => s.slice(0, MAX_MESSAGE_CHARS)), // truncate, don't reject
+    }),
+  ),
+});
+type Msg = z.infer<typeof BodySchema>["messages"][number];
 
-// Minimal in-memory rate limit (per server instance) to protect the API key.
+// Rate limit to protect the API key. In production set the Upstash env vars so the
+// limit is shared across serverless instances; otherwise fall back to in-memory
+// (per instance only, fine for local dev).
+const upstash =
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+    ? new Ratelimit({
+        redis: new Redis({
+          url: process.env.UPSTASH_REDIS_REST_URL,
+          token: process.env.UPSTASH_REDIS_REST_TOKEN,
+        }),
+        limiter: Ratelimit.slidingWindow(RATE_LIMIT_PER_MIN, "1 m"),
+        prefix: "twin-chat",
+      })
+    : null;
+
 const hits = new Map<string, number[]>();
-function limited(ip: string) {
+function limitedInMemory(ip: string) {
   const now = Date.now();
   const recent = (hits.get(ip) ?? []).filter((t) => now - t < 60_000);
   recent.push(now);
-  hits.set(ip, recent);
+  if (recent.length) hits.set(ip, recent);
+  if (hits.size > 5000) for (const [k, v] of hits) if (!v.some((t) => now - t < 60_000)) hits.delete(k);
   return recent.length > RATE_LIMIT_PER_MIN;
+}
+
+async function limited(ip: string) {
+  if (!upstash) return limitedInMemory(ip);
+  try {
+    return !(await upstash.limit(ip)).success;
+  } catch (e) {
+    console.error("[twin] rate limiter unavailable, using in-memory", e);
+    return limitedInMemory(ip);
+  }
+}
+
+// x-forwarded-for / x-real-ip are only trustworthy behind a host that sets them
+// (e.g. Vercel overwrites them); on a bare server a client can spoof these headers.
+function clientIp(req: Request) {
+  const real = req.headers.get("x-real-ip")?.trim();
+  if (real) return real;
+  const first = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return first || "unknown";
 }
 
 const text = (s: string, status = 200) =>
@@ -28,20 +79,22 @@ export async function POST(req: Request) {
   const key = process.env.OPENROUTER_API_KEY?.trim().replace(/^['"]|['"]$/g, "");
   if (!key) return text("The twin is not configured yet.", 500);
 
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "local";
-  if (limited(ip)) return text("You're sending messages quickly. Please wait a moment.", 429);
+  if (await limited(clientIp(req))) return text("You're sending messages quickly. Please wait a moment.", 429);
 
-  let messages: Msg[];
+  let json: unknown;
   try {
-    const body = await req.json();
-    messages = (body.messages as Msg[])
-      .filter((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
-      .slice(-MAX_HISTORY)
-      .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_MESSAGE_CHARS) }));
+    json = await req.json();
   } catch {
-    return text("Bad request.", 400);
+    return text("Bad request: body must be valid JSON.", 400);
   }
-  if (!messages.length || messages[messages.length - 1].role !== "user") return text("Bad request.", 400);
+  const parsed = BodySchema.safeParse(json);
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    return text(`Bad request: ${[...issue.path].join(".") || "body"} ${issue.message}`, 400);
+  }
+  const messages: Msg[] = parsed.data.messages.slice(-MAX_HISTORY);
+  if (!messages.length || messages[messages.length - 1].role !== "user")
+    return text("Bad request: the last message must be from the user.", 400);
 
   const request = () =>
     fetch(`${process.env.OPENROUTER_BASE_URL ?? "https://openrouter.ai/api/v1"}/chat/completions`, {

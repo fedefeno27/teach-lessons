@@ -18,6 +18,9 @@ export default function TwinChat() {
   const [busy, setBusy] = useState(false);
   const end = useRef<HTMLDivElement>(null);
   const field = useRef<HTMLInputElement>(null);
+  const fab = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLElement>(null);
+  const wasOpen = useRef(false);
 
   useEffect(() => {
     end.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -25,7 +28,31 @@ export default function TwinChat() {
 
   useEffect(() => {
     if (open) field.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    else if (wasOpen.current) fab.current?.focus(); // return focus on close (incl. Escape)
+    wasOpen.current = open;
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") return setOpen(false);
+      if (e.key !== "Tab" || !panel.current) return;
+      // Trap Tab / Shift+Tab inside the panel.
+      const items = Array.from(
+        panel.current.querySelectorAll<HTMLElement>("button:not([disabled]), input:not([disabled])"),
+      );
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      if (!panel.current.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
@@ -77,6 +104,7 @@ export default function TwinChat() {
   return (
     <>
       <button
+        ref={fab}
         className={`twin-fab ${open ? "hide" : ""}`}
         onClick={() => setOpen(true)}
         tabIndex={open ? -1 : 0}
@@ -86,7 +114,14 @@ export default function TwinChat() {
         <span className="dot" /> Ask my digital twin
       </button>
 
-      <section className={`twin ${open ? "open" : ""}`} role="dialog" aria-label="Digital twin chat" aria-hidden={!open}>
+      <section
+        ref={panel}
+        className={`twin ${open ? "open" : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Digital twin chat"
+        aria-hidden={!open}
+      >
         <header>
           <div>
             <strong>Digital twin</strong>
