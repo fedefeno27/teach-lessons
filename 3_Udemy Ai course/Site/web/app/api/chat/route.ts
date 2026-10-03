@@ -2,6 +2,7 @@ import { z } from "zod";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { MODEL, systemPrompt } from "@/lib/twin";
+import { sseToTextStream } from "@/lib/sse";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -133,29 +134,7 @@ export async function POST(req: Request) {
   }
 
   // Convert OpenRouter's SSE stream into a plain text stream of content deltas.
-  const dec = new TextDecoder();
-  const enc = new TextEncoder();
-  let buf = "";
-  const stream = new TransformStream<Uint8Array, Uint8Array>({
-    transform(chunk, ctl) {
-      buf += dec.decode(chunk, { stream: true });
-      const lines = buf.split("\n");
-      buf = lines.pop() ?? "";
-      for (const line of lines) {
-        if (!line.startsWith("data:")) continue;
-        const data = line.slice(5).trim();
-        if (!data || data === "[DONE]") continue;
-        try {
-          const delta = JSON.parse(data).choices?.[0]?.delta?.content;
-          if (delta) ctl.enqueue(enc.encode(delta));
-        } catch {
-          /* ignore keep-alive / partial lines */
-        }
-      }
-    },
-  });
-
-  return new Response(upstream.body.pipeThrough(stream), {
+  return new Response(upstream.body.pipeThrough(sseToTextStream()), {
     headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
   });
 }
